@@ -13,11 +13,6 @@ public class Warrior extends Player {
         this.actions.add(new PhysicalAttack("Heavy Slash", 10, "A powerful attack filled with spirit", 65, 80, null, null, 0, false));
         this.actions.add(new PhysicalAttack("Berserk", 20, "A powerful attack that sacrifices defense", 100, 70, null, new StatusEffects[]{StatusEffects.WEAKENED}, 2, false));
     }
-    @Override
-    public void attack(Character enemy) {
-
-    }
-
     public String toString() {
         return this.actions.toString();
     }

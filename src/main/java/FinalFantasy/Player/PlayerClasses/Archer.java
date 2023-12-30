@@ -10,8 +10,4 @@ public class Archer extends Player {
 
     }
 
-    @Override
-    public void attack(Character enemy) {
-
-    }
 }

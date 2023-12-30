@@ -9,9 +9,5 @@ public class Wizard extends Player {
         super(200, 180, 25, 20, 20, 20, CharacterClass.MAGIC);
     }
 
-    @Override
-    public void attack(Character enemy) {
-
-    }
 
 }

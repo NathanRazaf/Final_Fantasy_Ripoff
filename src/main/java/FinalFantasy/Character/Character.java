@@ -3,22 +3,19 @@ package FinalFantasy.Character;
 import FinalFantasy.Actions.Action;
 import FinalFantasy.StatusEffects;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public abstract class Character {
-    protected int maxHp, maxMp, currAtk, currDef, currCrt, currSpd;
+    protected int maxHp, maxMp;
     protected int hp, mp, atk, def, crt, spd;
     protected final CharacterClass characterClass;
     protected final ArrayList<Action> actions = new ArrayList<>();
-    protected ArrayList<StatusEffects> statusEffects;
+    protected HashMap<StatusEffects, Integer> statusEffects = new HashMap<>();
 
     //constructor
     public Character(int hp, int mp, int atk, int def, int crt, int spd, CharacterClass characterClass) {
         this.maxHp = hp;
         this.maxMp = mp;
-        this.currAtk = atk;
-        this.currDef = def;
-        this.currCrt = crt;
-        this.currSpd = spd;
         this.hp = hp;
         this.mp = mp;
         this.atk = atk;
@@ -26,7 +23,6 @@ public abstract class Character {
         this.crt = crt;
         this.spd = spd;
         this.characterClass = characterClass;
-        this.statusEffects = new ArrayList<>();
     }
 
 
@@ -49,10 +45,16 @@ public abstract class Character {
     public int getSpd() {
         return spd;
     }
+    public int getMaxHp() {
+        return maxHp;
+    }
+    public int getMaxMp() {
+        return maxMp;
+    }
     public CharacterClass getCharacterClass() {
         return characterClass;
     }
-    public ArrayList<StatusEffects> getStatusEffects() {
+    public HashMap<StatusEffects, Integer> getStatusEffects() {
         return statusEffects;
     }
 
@@ -75,12 +77,34 @@ public abstract class Character {
         this.spd = spd;
     }
 
+    public void setMaxHp(int maxHp) {
+        this.maxHp = maxHp;
+    }
+    public void setMaxMp(int maxMp) {
+        this.maxMp = maxMp;
+    }
+
     protected int randomIntRange(int min, int max) {
         return (int) (Math.random() * (max - min + 1) + min);
     }
-
-    public void addStatusEffect(StatusEffects statusEffect) {
-        statusEffects.add(statusEffect);
+    public void addStatusEffect(StatusEffects statusEffect, int turnDuration) {
+        if (statusEffects.containsKey(statusEffect)) {
+            statusEffects.put(statusEffect, statusEffects.get(statusEffect) + turnDuration);
+        } else {
+            statusEffects.put(statusEffect, turnDuration);
+        }
     }
-    public abstract void attack(Character target);
+    public void addStatusEffect(StatusEffects statusEffect) {
+        statusEffects.put(statusEffect, Integer.MAX_VALUE/2);
+    }
+    public void removeStatusEffect(StatusEffects statusEffect) {
+        statusEffects.remove(statusEffect);
+    }
+    public void addAction(Action action) {
+        actions.add(action);
+    }
+    public void removeAction(Action action) {
+        actions.remove(action);
+    }
+
 }
