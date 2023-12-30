@@ -27,6 +27,37 @@ public abstract class Action {
         this.isAsPercentage = isAsPercentage;
     }
 
+    public String getName() {
+        return this.name;
+    }
+    public int getMpCost() {
+        return this.mpCost;
+    }
+    public String getDescription() {
+        return this.description;
+    }
+    public int getValue() {
+        return this.value;
+    }
+    public ActionTypes getActionType() {
+        return this.actionType;
+    }
+    public int getHitChance() {
+        return this.hitChance;
+    }
+    public StatusEffects[] getStatusEffects() {
+        return this.statusEffects;
+    }
+    public StatusEffects[] getDrawbacks() {
+        return this.drawbacks;
+    }
+    public int getTurnDuration() {
+        return this.turnDuration;
+    }
+    public boolean getIsAsPercentage() {
+        return this.isAsPercentage;
+    }
+
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(this.name).append(" (").append(this.mpCost).append(" MP)").append("\n");

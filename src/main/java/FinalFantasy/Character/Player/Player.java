@@ -1,4 +1,4 @@
-package FinalFantasy.Player;
+package FinalFantasy.Character.Player;
 
 import FinalFantasy.Character.Character;
 import FinalFantasy.Character.CharacterClass;
@@ -15,8 +15,8 @@ public abstract class Player extends Character {
     private Leggings leggings = null;
     private Boots boots = null;
     private Weapon[] weapons = new Weapon[2];
-    public Player(int hp, int mp, int atk, int def, int crt, int spd, CharacterClass characterClass) {
-        super(hp, mp, atk, def, crt, spd, characterClass);
+    public Player(String name, int hp, int mp, int atk, int def, int crt, int spd, CharacterClass characterClass) {
+        super(name, hp, mp, atk, def, crt, spd, characterClass);
     }
     public int getExp() {
         return this.exp;
@@ -264,17 +264,20 @@ public abstract class Player extends Character {
         this.level++;
         this.removeAllBonuses(); // Ignore bonuses from equipment
         // Increase stats
-        this.maxHp = (int) Math.round(this.maxHp * Math.pow(1.4, this.level));
-        this.maxMp = (int) Math.round(this.maxMp * Math.pow(1.2, this.level));
-        this.atk = (int) Math.round(this.atk * Math.pow(1.3, this.level));
-        this.def = (int) Math.round(this.def * Math.pow(1.2, this.level));
-        this.crt = (int) Math.round(this.crt * Math.pow(1.2, this.level));
-        this.spd = (int) Math.round(this.spd * Math.pow(1.2, this.level));
+        this.maxHp = (int) Math.round(this.maxHp * 1.15);
+        this.maxMp = (int) Math.round(this.maxMp * 1.08);
+        this.atk = (int) Math.round(this.atk * 1.12);
+        this.def = (int) Math.round(this.def * 1.1);
+        this.crt = (int) Math.round(this.crt * 1.1);
+        this.spd = (int) Math.round(this.spd * 1.1);
         this.putBackAllBonuses(); // Re-apply bonuses from equipment
         this.hp = this.maxHp;
         this.mp = this.maxMp;
         System.out.println("Level up! Level " + this.level);
         System.out.println("XP for next level: " + this.getRemainingXpForNextLevel());
     }
+
+
+
 
 }
