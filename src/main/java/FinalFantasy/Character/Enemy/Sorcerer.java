@@ -33,9 +33,4 @@ public class Sorcerer extends Enemy {
             return SorcererTypes.SORCERER_KING.getName();
         }
     }
-
-    @Override
-    public void doAction(Action action, Character target) {
-
-    }
 }

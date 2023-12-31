@@ -59,6 +59,9 @@ public abstract class Character {
     public int getMaxMp() {
         return maxMp;
     }
+    public ArrayList<Action> getActions() {
+        return actions;
+    }
     public CharacterClass getCharacterClass() {
         return characterClass;
     }

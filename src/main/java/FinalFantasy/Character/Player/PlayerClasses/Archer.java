@@ -8,11 +8,5 @@ import FinalFantasy.Character.Player.Player;
 public class Archer extends Player {
     public Archer(String name) {
         super(name, 250, 100, 30, 30, 25, 20, CharacterClass.RANGED);
-
-    }
-
-    @Override
-    public void doAction(Action action, Character target) {
-
     }
 }

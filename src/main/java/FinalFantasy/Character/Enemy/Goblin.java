@@ -34,9 +34,4 @@ public class Goblin extends Enemy {
             return GoblinTypes.GOBLIN_KING.getName();
         }
     }
-
-    @Override
-    public void doAction(Action action, Character target) {
-
-    }
 }

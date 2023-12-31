@@ -94,4 +94,8 @@ public abstract class Action {
 
         return sb.toString();
     }
+
+    public String smallToString() {
+        return this.name + " (" + this.mpCost + " MP)";
+    }
 }

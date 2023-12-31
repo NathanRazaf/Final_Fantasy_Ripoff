@@ -34,8 +34,4 @@ public class Harpy extends Enemy {
         }
     }
 
-    @Override
-    public void doAction(Action action, Character target) {
-
-    }
 }

@@ -20,6 +20,4 @@ public class Warrior extends Player {
     public String toString() {
         return this.actions.toString();
     }
-
-
 }
