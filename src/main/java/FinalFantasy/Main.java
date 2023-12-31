@@ -1,10 +1,20 @@
 package FinalFantasy;
 
-
+import FinalFantasy.Battles.Battle;
+import FinalFantasy.Character.Player.Player;
+import FinalFantasy.Character.Player.PlayerClasses.Archer;
 import FinalFantasy.Character.Player.PlayerClasses.Warrior;
+import FinalFantasy.Character.Player.PlayerClasses.Wizard;
+
+import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println(new Warrior("Nathan"));
+        ArrayList<Player> players = new ArrayList<>();
+        players.add(new Warrior("Kevin"));
+        players.add(new Archer("Bob"));
+        players.add(new Wizard("Alice"));
+        Battle battle = new Battle(players);
+        battle.showBattleState();
     }
 }

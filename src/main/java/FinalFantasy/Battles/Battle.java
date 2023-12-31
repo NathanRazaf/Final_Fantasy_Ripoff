@@ -4,11 +4,25 @@ import FinalFantasy.Actions.Action;
 import FinalFantasy.Actions.ActionTypes;
 import FinalFantasy.Character.Character;
 import FinalFantasy.Character.Enemy.Enemy;
+import FinalFantasy.Character.Enemy.Goblin;
+import FinalFantasy.Character.Enemy.Harpy;
+import FinalFantasy.Character.Enemy.Sorcerer;
 import FinalFantasy.Character.Player.Player;
 
 import java.util.ArrayList;
 
 public class Battle {
+    final String RESET = "\u001B[0m";
+    final String RED = "\u001B[31m";
+    final String GREEN = "\u001B[32m";
+    final String YELLOW = "\u001B[33m";
+    final String BLUE = "\u001B[34m";
+    final String PURPLE = "\u001B[35m";
+    final String CYAN = "\u001B[36m";
+    final String WHITE = "\u001B[37m";
+    final String BLACK = "\u001B[30m";
+    final String BRIGHT_RED = "\u001B[91m";
+    final String BRIGHT_GREEN = "\u001B[92m";
     private final ArrayList<Player> players;
     private final ArrayList<Enemy> enemies;
     private final ArrayList<Character> turnOrder = new ArrayList<>();
@@ -17,7 +31,31 @@ public class Battle {
         this.enemies = enemies;
         this.orderTurns();
     }
+
+    public Battle(ArrayList<Player> players) {
+        this.players = players;
+        int averageLevel = (int) this.players.stream().mapToInt(Player::getLevel).average().orElse(1);
+        this.enemies = new ArrayList<>();
+        for (int i=0; i<3; i++) { // spawns between 1 and 3 enemies
+            double rand = Math.pow(0.5, i); // 100% chance of 1 enemy, 50% chance of 2 enemies, 25% chance of 3 enemies
+            if (Math.random() < rand) {
+                Enemy enemy;
+                double random = Math.random();
+                // 33% chance of goblin, 33% chance of harpy, 33% chance of sorcerer
+                if (random < 0.33) {
+                    enemy = new Goblin(randomIntRange(averageLevel - 1, averageLevel + 1), Math.random() < 0.1);
+                } else if (random < 0.66) {
+                    enemy = new Harpy(randomIntRange(averageLevel - 1, averageLevel + 1), Math.random() < 0.1);
+                } else {
+                    enemy = new Sorcerer(randomIntRange(averageLevel - 1, averageLevel + 1), Math.random() < 0.1);
+                }
+                this.enemies.add(enemy);
+            }
+        }
+        this.orderTurns();
+    }
     private void orderTurns() {
+        this.turnOrder.clear();
         this.turnOrder.addAll(this.players);
         this.turnOrder.addAll(this.enemies);
         this.turnOrder.sort((a, b) -> Integer.compare(b.getSpd(), a.getSpd()));
@@ -34,7 +72,6 @@ public class Battle {
     }
 
     public void startBattle() {
-        orderTurns();
         while (true) {
             if (isBattleOver()) {
                 endBattle(isVictory());
@@ -82,4 +119,17 @@ public class Battle {
         }
         System.out.println(sb);
     }
+
+    public void showBattleState() {
+        System.out.println(PURPLE + "Battle State:" + RESET);
+        System.out.println(BRIGHT_GREEN + "Players:");
+        for (Player player : this.players) {
+            System.out.println(GREEN + player.toString());
+        }
+    }
+
+    private int randomIntRange(int min, int max) {
+        return (int) (Math.random() * (max - min + 1) + min);
+    }
+
 }

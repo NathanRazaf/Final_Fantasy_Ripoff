@@ -6,7 +6,7 @@ import FinalFantasy.Character.CharacterClass;
 import FinalFantasy.Character.Enemy.EnemyTypes.HarpyTypes;
 
 public class Harpy extends Enemy {
-    public Harpy(String name, int level, boolean isBoss) {
+    public Harpy(int level, boolean isBoss) {
         super(generateName(level, isBoss), level, isBoss, 175, 90, 25, 25, 20, 30, CharacterClass.RANGED, 15);
     }
 

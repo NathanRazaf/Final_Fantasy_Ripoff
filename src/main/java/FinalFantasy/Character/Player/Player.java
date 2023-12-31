@@ -1,5 +1,6 @@
 package FinalFantasy.Character.Player;
 
+import FinalFantasy.Actions.Action;
 import FinalFantasy.Character.Character;
 import FinalFantasy.Character.CharacterClass;
 import FinalFantasy.Loot.Equipment.Armors.*;
@@ -277,7 +278,50 @@ public abstract class Player extends Character {
         System.out.println("XP for next level: " + this.getRemainingXpForNextLevel());
     }
 
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Name: ").append(this.name).append("\n");
+        sb.append("Level: ").append(this.level).append("\n");
+        sb.append("HP: ").append(this.hp).append("/").append(this.maxHp).append("\n");
+        sb.append("MP: ").append(this.mp).append("/").append(this.maxMp).append("\n");
+        sb.append("ATK: ").append(this.atk).append("\n");
+        sb.append("DEF: ").append(this.def).append("\n");
+        sb.append("CRT: ").append(this.crt).append("\n");
+        sb.append("SPD: ").append(this.spd).append("\n");
+        sb.append("Class: ").append(this.characterClass).append("\n");
+        sb.append("Helmet: ").append(this.helmet).append("\n");
+        sb.append("Chest plate: ").append(this.chestPlate).append("\n");
+        sb.append("Leggings: ").append(this.leggings).append("\n");
+        sb.append("Boots: ").append(this.boots).append("\n");
+        sb.append("Weapon 1: ").append(this.weapons[0]).append("\n");
+        sb.append("Weapon 2: ").append(this.weapons[1]).append("\n");
+        for (Action action : this.actions) {
+            sb.append(action.toString()).append("\n");
+        }
+        return sb.toString();
+    }
 
+    private String effectsToString() {
+        if (this.statusEffects.isEmpty()) return "none";
+        StringBuilder s = new StringBuilder();
+        for (StatusEffects statusEffect : this.statusEffects.keySet()) {
+            s.append(statusEffect.toString()).append(" (").append(this.statusEffects.get(statusEffect)).append(" turns left); ");
+        }
+        return s.toString();
+    }
+    public String smallToString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Name: ").append(this.name).append("\t\t");
+        sb.append("Level: ").append(this.level).append("\n");
+        sb.append("HP: ").append(this.hp).append("/").append(this.maxHp).append("\t\t");
+        sb.append("MP: ").append(this.mp).append("/").append(this.maxMp).append("\n");
+        sb.append("Status effects: ").append(this.effectsToString()).append("\n");
+        sb.append("Attacks: \n");
+        for (Action action : this.actions) {
+            sb.append(action.smallToString()).append("\n");
+        }
+        return sb.toString();
+    }
 
 
 }
