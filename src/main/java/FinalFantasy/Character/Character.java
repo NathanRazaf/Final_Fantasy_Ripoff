@@ -121,29 +121,34 @@ public abstract class Character {
         switch (effect) {
             case POISONED:
                 this.hp = (int) (this.hp * 0.95);
+                System.out.println(this.getName() + " took 5% damage from poison!");
                 break;
             case FOCUSED:
                 if (!appliedEffects.contains(StatusEffects.FOCUSED)) {
                     this.crt = (int) (this.crt * 1.2);
                     appliedEffects.add(StatusEffects.FOCUSED);
+                    System.out.println(this.getName() + " is focused!");
                 }
                 break;
             case CONFUSED:
                 if (!appliedEffects.contains(StatusEffects.CONFUSED)) {
                     this.crt = (int) (this.crt * 0.8);
                     appliedEffects.add(StatusEffects.CONFUSED);
+                    System.out.println(this.getName() + " is confused!");
                 }
                 break;
             case ACCELERATED:
                 if (!appliedEffects.contains(StatusEffects.ACCELERATED)) {
                     this.spd = (int) (this.spd * 1.2);
                     appliedEffects.add(StatusEffects.ACCELERATED);
+                    System.out.println(this.getName() + " is accelerated!");
                 }
                 break;
             case SLOWED:
                 if (!appliedEffects.contains(StatusEffects.SLOWED)) {
                     this.spd = (int) (this.spd * 0.8);
                     appliedEffects.add(StatusEffects.SLOWED);
+                    System.out.println(this.getName() + " is slowed!");
                 }
                 break;
             case WEAKENED:
@@ -151,6 +156,7 @@ public abstract class Character {
                     this.atk = (int) (this.atk * 0.8);
                     this.def = (int) (this.def * 0.8);
                     appliedEffects.add(StatusEffects.WEAKENED);
+                    System.out.println(this.getName() + " is weakened!");
                 }
                 break;
             case STRENGTHENED:
@@ -158,6 +164,7 @@ public abstract class Character {
                     this.atk = (int) (this.atk * 1.2);
                     this.def = (int) (this.def * 1.2);
                     appliedEffects.add(StatusEffects.STRENGTHENED);
+                    System.out.println(this.getName() + " is strengthened!");
                 }
                 break;
         }
@@ -311,5 +318,14 @@ public abstract class Character {
         criticalHitChance = Math.max(Math.min(criticalHitChance, 100), 0); // Ensuring it's within 0-100%
 
         return (int) criticalHitChance;
+    }
+
+    protected String effectsToString() {
+        if (this.statusEffects.isEmpty()) return "none";
+        StringBuilder s = new StringBuilder();
+        for (StatusEffects statusEffect : this.statusEffects.keySet()) {
+            s.append(statusEffect.toString()).append(" (").append(this.statusEffects.get(statusEffect)).append(" turns left); ");
+        }
+        return s.toString();
     }
 }

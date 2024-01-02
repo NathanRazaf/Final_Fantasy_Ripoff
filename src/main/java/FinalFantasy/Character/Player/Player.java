@@ -300,26 +300,12 @@ public abstract class Player extends Character {
         }
         return sb.toString();
     }
-
-    private String effectsToString() {
-        if (this.statusEffects.isEmpty()) return "none";
-        StringBuilder s = new StringBuilder();
-        for (StatusEffects statusEffect : this.statusEffects.keySet()) {
-            s.append(statusEffect.toString()).append(" (").append(this.statusEffects.get(statusEffect)).append(" turns left); ");
-        }
-        return s.toString();
-    }
     public String smallToString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Name: ").append(this.name).append("\t\t");
-        sb.append("Level: ").append(this.level).append("\n");
+        sb.append("Name: ").append(this.name).append("\t\t").append("Class: ").append(this.characterClass).append("\n");
         sb.append("HP: ").append(this.hp).append("/").append(this.maxHp).append("\t\t");
         sb.append("MP: ").append(this.mp).append("/").append(this.maxMp).append("\n");
         sb.append("Status effects: ").append(this.effectsToString()).append("\n");
-        sb.append("Attacks: \n");
-        for (Action action : this.actions) {
-            sb.append(action.smallToString()).append("\n");
-        }
         return sb.toString();
     }
 

@@ -15,6 +15,10 @@ public class Main {
         players.add(new Archer("Bob"));
         players.add(new Wizard("Alice"));
         Battle battle = new Battle(players);
-        battle.showBattleState();
+        if (battle.startBattle()) {
+            System.out.println("You won!");
+        } else {
+            System.out.println("You lost!");
+        }
     }
 }

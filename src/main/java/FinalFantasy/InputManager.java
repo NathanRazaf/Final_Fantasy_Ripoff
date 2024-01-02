@@ -48,6 +48,15 @@ public class InputManager {
     }
 
     // Add other input methods as needed
+
+    public int nextInt() {
+        int nextInt = scanner.nextInt();
+        while (nextInt < 0) {
+            System.out.println("Please enter a non-negative input");
+            nextInt = scanner.nextInt();
+        }
+        return nextInt;
+    }
 }
 
 

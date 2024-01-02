@@ -1,13 +1,19 @@
 package FinalFantasy.Character.Enemy;
 
 import FinalFantasy.Actions.Action;
+import FinalFantasy.Actions.MagicalAttack;
+import FinalFantasy.Actions.PhysicalAttack;
 import FinalFantasy.Character.Character;
 import FinalFantasy.Character.CharacterClass;
 import FinalFantasy.Character.Enemy.EnemyTypes.HarpyTypes;
+import FinalFantasy.StatusEffects;
 
 public class Harpy extends Enemy {
     public Harpy(int level, boolean isBoss) {
         super(generateName(level, isBoss), level, isBoss, 175, 90, 25, 25, 20, 30, CharacterClass.RANGED, 15);
+        this.actions.add(new PhysicalAttack("Harpy Claw", 0, "A basic claw attack", 30, 90, null, null, 0, false));
+        this.actions.add(new MagicalAttack("Harpy Wind Blade", 10, "A wind blade created by the harpy's sharp wings", 50, 80, null, null, 0, false));
+        this.actions.add(new PhysicalAttack("Harpy Feather Storm", 30, "A fury of feathers stunning the enemy", 70, 70, new StatusEffects[]{StatusEffects.CONFUSED}, null, 2, false));
     }
 
     private static String generateName(int level, boolean isBoss) {

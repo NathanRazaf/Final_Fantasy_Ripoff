@@ -63,4 +63,13 @@ public abstract class Enemy extends Character {
     public int getExpGiven() {
         return this.expGiven;
     }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(this.name).append("\t\t").append("Type: ").append(this.characterClass).append("\n");
+        sb.append("HP: ").append(this.hp).append("\n");
+        sb.append("Status effects: ").append(this.effectsToString()).append("\n");
+        if (isBoss) sb.append("BOSS").append("\n");
+        return sb.toString();
+    }
 }
