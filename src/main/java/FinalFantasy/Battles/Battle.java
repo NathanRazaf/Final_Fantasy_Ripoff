@@ -73,7 +73,7 @@ public class Battle {
         return this.turnOrder;
     }
 
-    public boolean startBattle() {
+    public boolean doBattle() {
         while (true) {
             for (Character character : this.turnOrder) {character.applyEffects();}
             orderTurns();
@@ -121,7 +121,7 @@ public class Battle {
         if (isVictory) {
             System.out.println("You won!");
         } else {
-            System.out.println("You lost!");
+            System.out.println("You lost! It's hardcore mode by default lol sorry so you'll have to restart the game");
         }
     }
 

@@ -237,7 +237,7 @@ public abstract class Character {
         if (attack.getHitChance() >= (int) (Math.random() * 100)) {
             int damage = this.calculateDamage(attack, target);
             target.setHp(Math.max(0, target.getHp() - damage));
-            System.out.println(this.getName() + " dealt " + damage + " damage to " + target.getName() + "!");
+            System.out.println(this.getName() + " dealt " + damage + " damage to " + target.getName() + " with " + attack.getName() + "!");
         } else {
             System.out.println(this.getName() + " missed his attack on " + target.getName() + "!");
         }
@@ -246,7 +246,7 @@ public abstract class Character {
         if (heal.getHitChance() >= (int) (Math.random() * 100)) {
             int healAmount = this.calculateHeal(heal, target);
             target.setHp(Math.min(target.getMaxHp(), target.getHp() + healAmount));
-            System.out.println(this.getName() + " healed " + target.getName() + " for " + healAmount + " HP!");
+            System.out.println(this.getName() + " healed " + target.getName() + " for " + healAmount + " HP with " + heal.getName() + "!");
         }
     }
     private int calculateHeal(Action heal, Character target) {

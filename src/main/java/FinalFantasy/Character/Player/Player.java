@@ -241,6 +241,7 @@ public abstract class Player extends Character {
 
     public void addExp(int exp) {
         this.exp += exp;
+        System.out.println(this.name + " gained " + exp + " exp!");
         int level = this.calculateLevelForExp(this.exp); // Calculate level for current exp
         while (level > this.level) { // Level up until appropriate level is reached
             this.levelUp();

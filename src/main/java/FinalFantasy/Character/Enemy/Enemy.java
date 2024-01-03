@@ -46,7 +46,9 @@ public abstract class Enemy extends Character {
         Random rand = new Random();
 
         for (Map.Entry<Loot, Integer> entry : lootMap.entrySet()) {
-            if (rand.nextInt(100) < entry.getValue()) {
+            int randToReach = entry.getValue();
+            if (isBoss) randToReach *= 3;
+            if (rand.nextInt(100) < randToReach) {
                 this.lootGiven.add(entry.getKey());
             }
         }
