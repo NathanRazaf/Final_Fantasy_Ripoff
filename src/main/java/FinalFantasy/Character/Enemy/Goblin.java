@@ -9,10 +9,10 @@ import FinalFantasy.Character.Enemy.EnemyTypes.GoblinTypes;
 public class Goblin extends Enemy {
     public Goblin(int level, boolean isBoss) {
         super(generateName(level, isBoss), level, isBoss, 150, 80, 30, 30, 15, 27, CharacterClass.MELEE, 10);
+        this.goldGiven = 10+level*3;
         this.actions.add(new PhysicalAttack("Goblin Punch", 0, "A basic punch", 30, 90, null, null, 0, false));
         this.actions.add(new PhysicalAttack("Goblin Stab", 10, "A fast stab", 50, 80, null, null, 0, false));
         this.actions.add(new PhysicalAttack("Goblin Rush", 20, "A rapid succession of attacks", 70, 70, null, null, 0, false));
-
 
     }
 

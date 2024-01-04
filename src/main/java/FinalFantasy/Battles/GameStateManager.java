@@ -1,20 +1,27 @@
 package FinalFantasy.Battles;
 
+import FinalFantasy.Character.CharacterClass;
 import FinalFantasy.Character.Enemy.Enemy;
 import FinalFantasy.Character.Player.Player;
 import FinalFantasy.Character.Player.PlayerClasses.Archer;
 import FinalFantasy.Character.Player.PlayerClasses.Warrior;
 import FinalFantasy.Character.Player.PlayerClasses.Wizard;
+import FinalFantasy.Loot.Equipment.Armors.Boots;
+import FinalFantasy.Loot.Equipment.Armors.ChestPlate;
+import FinalFantasy.Loot.Equipment.Armors.Leggings;
+import FinalFantasy.Loot.Equipment.Weapons.Bow;
+import FinalFantasy.Loot.Equipment.Weapons.Sword;
 import FinalFantasy.Loot.Loot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import FinalFantasy.InputManager;
+import FinalFantasy.StatusEffects;
 
 public class GameStateManager {
     private static GameStateManager instance = null;
-    private ArrayList<Player> players = new ArrayList<>();
-    private HashMap<Loot, Integer> inventory = new HashMap<>();
+    private final ArrayList<Player> players = new ArrayList<>();
+    private final Inventory inventory = new Inventory(this.players);
     public static GameStateManager getInstance() {
         if (instance == null) {
             instance = new GameStateManager();
@@ -53,17 +60,17 @@ public class GameStateManager {
         }
     }
     private void showInventory() {
-        System.out.println("Your inventory:");
-        if (this.inventory.isEmpty()) {
-            System.out.println("Your inventory is empty!");
-            return;
-        }
-        for (Loot loot : this.inventory.keySet()) {
-            System.out.println(loot.getName() + " x" + this.inventory.get(loot));
-        }
+        inventory.display();
     }
     public void start() {
         this.setUpPlayers();
+        //mock inventory
+        inventory.addLoot(new Boots("Boots of Speed", 20, "Gives speed boost", 15, 10, 0, 10, 0, 20, CharacterClass.RANGED, new StatusEffects[]{StatusEffects.ACCELERATED}));
+        inventory.addLoot(new ChestPlate("Chestplate of the Warrior", 20, "Gives strength boost", 25, 5, 10, 15, 0, 0, CharacterClass.MELEE, new StatusEffects[]{StatusEffects.STRENGTHENED}));
+        inventory.addLoot(new Leggings("Leggings of magic", 20, "Gives magic boost", 15, 25, 0, 10, 0, 0, CharacterClass.MAGIC, null));
+        inventory.addLoot(new Sword("Sword of the Warrior", 20, "Gives strength boost", 35, 10));
+        inventory.addLoot(new Bow("Bow of the Archer", 20, "Gives critical hit boost", 15, 25));
+
         boolean isRunning = true;
         while (isRunning) isRunning = this.displayMainMenu();
     }
@@ -81,11 +88,11 @@ public class GameStateManager {
         }
         switch (input) {
             case 1: return true;
-            case 2: return true;
+            case 2: showInventory();
             case 3: return this.startBattle();
             case 0: return false;
         }
-        return false;
+        return true;
     }
 
     private boolean startBattle() {
@@ -98,14 +105,11 @@ public class GameStateManager {
         int totalXpGiven = 0;
         for (Enemy enemy : battle.getEnemies()) {
             for (Loot loot : enemy.getLootGiven()) {
-                System.out.println("You got " + loot.getName() + " x1!");
-                if (this.inventory.containsKey(loot)) {
-                    this.inventory.put(loot, this.inventory.get(loot) + 1);
-                } else {
-                    this.inventory.put(loot, 1);
-                }
+                inventory.addLoot(loot);
             }
             totalXpGiven += enemy.getExpGiven();
+            inventory.addGold(enemy.getGoldGiven());
+            System.out.println("You got " + enemy.getGoldGiven() + " gold from " + enemy.getName());
         }
         for (Player player : battle.getPlayers()) {
             player.addExp(totalXpGiven);

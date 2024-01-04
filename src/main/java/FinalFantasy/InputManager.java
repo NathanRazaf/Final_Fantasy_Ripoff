@@ -50,13 +50,22 @@ public class InputManager {
     // Add other input methods as needed
 
     public int nextInt() {
+        while (!scanner.hasNextInt()) {
+            System.out.println("Please enter an integer");
+            scanner.next(); // Consume the non-integer input
+        }
         int nextInt = scanner.nextInt();
         while (nextInt < 0) {
-            System.out.println("Please enter a non-negative input");
+            System.out.println("Please enter a non-negative integer");
+            while (!scanner.hasNextInt()) {
+                System.out.println("Please enter an integer");
+                scanner.next(); // Consume the non-integer input
+            }
             nextInt = scanner.nextInt();
         }
         return nextInt;
     }
+
 }
 
 

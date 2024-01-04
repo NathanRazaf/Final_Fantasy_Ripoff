@@ -10,7 +10,7 @@ import FinalFantasy.StatusEffects;
 
 public abstract class Player extends Character {
     private int exp = 0;
-    private int level = 0;
+    private int level = 1;
     private Helmet helmet = null;
     private ChestPlate chestPlate = null;
     private Leggings leggings = null;
@@ -94,132 +94,150 @@ public abstract class Player extends Character {
             }
         }
     }
-    public void equipWeapon(Weapon weapon) {
-        if (weapon == null) return;
+    public boolean equipWeapon(Weapon weapon) {
+        if (weapon == null) return false;
         if (this.weapons[0] == null) { // 1st hand already empty
             this.weapons[0] = weapon;
             this.applyBonus(weapon);
             if (weapon.getNumHands() == 2) { // 2-handed weapon
                 this.weapons[1] = weapon;
             }
+            return true;
         } else if (this.weapons[1] == null) { // Only 2nd hand empty
             if (weapon.getNumHands() == 2) {
                 System.out.println("Can't equip 2-handed weapon on 2nd hand");
-                return;
+                return false;
             }
             this.weapons[1] = weapon;
             this.applyBonus(weapon);
+            return true;
         } else {
             System.out.println("Can't equip more than 2 weapons");
+            return false;
         }
     }
-
-    public void equipArmor(Armor armor) {
-        if (armor == null) return;
+    public boolean equipArmor(Armor armor) {
+        if (armor == null) return false;
         switch (armor.getArmorType()) {
             case HELMET:
                 if (this.helmet != null) {
                     System.out.println("Helmet slot already occupied");
-                    return;
+                    return false;
                 }
                 this.helmet = (Helmet) armor;
                 this.applyBonus(this.helmet);
-                break;
+                return true;
             case CHEST_PLATE:
                 if (this.chestPlate != null) {
                     System.out.println("Chest plate slot already occupied");
-                    return;
+                    return false;
                 }
                 this.chestPlate = (ChestPlate) armor;
                 this.applyBonus(this.chestPlate);
-                break;
+                return true;
             case LEGGINGS:
                 if (this.leggings != null) {
                     System.out.println("Leggings slot already occupied");
-                    return;
+                    return false;
                 }
                 this.leggings = (Leggings) armor;
                 this.applyBonus(this.leggings);
-                break;
+                return true;
             case BOOTS:
                 if (this.boots != null) {
                     System.out.println("Boots slot already occupied");
-                    return;
+                    return false;
                 }
                 this.boots = (Boots) armor;
                 this.applyBonus(this.boots);
-                break;
+                return true;
         }
+        return false;
     }
-
-    public void equip(Loot equipment) {
+    public boolean equip(Loot equipment) {
         if (equipment instanceof Weapon) {
-            this.equipWeapon((Weapon) equipment);
+            for (CharacterClass characterClass : ((Weapon) equipment).getCharacterClasses()) {
+                if (characterClass == this.characterClass) {
+                    return this.equipWeapon((Weapon) equipment);
+                }
+            }
+            System.out.println("Can't equip weapon of different class");
+            return false;
         } else if (equipment instanceof Armor) {
-            this.equipArmor((Armor) equipment);
+            if (((Armor) equipment).getCharacterClass() != this.characterClass) {
+                System.out.println("Can't equip armor of different class");
+                return false;
+            }
+            return this.equipArmor((Armor) equipment);
         }
+        return false;
     }
 
-    public void unEquipWeapon(Weapon weapon) {
-        if (weapon == null) return;
+    public boolean unEquipWeapon(Weapon weapon) {
+        if (weapon == null) return false;
         if (this.weapons[0] == weapon) { // 1st hand
             this.removeBonus(weapon);
             this.weapons[0] = null;
             if (weapon.getNumHands() == 2) { // 2-handed weapon
                 this.weapons[1] = null;
             }
+            return true;
         } else if (this.weapons[1] == weapon) { // 2nd hand
             this.removeBonus(weapon);
             this.weapons[1] = null;
+            return true;
         } else {
             System.out.println("Weapon not equipped");
+            return false;
         }
     }
 
-    public void unEquipArmor(Armor armor) {
-        if (armor == null) return;
+    public boolean unEquipArmor(Armor armor) {
+        if (armor == null) return false;
         switch (armor.getArmorType()) {
             case HELMET:
                 if (this.helmet == null) {
                     System.out.println("Helmet slot already empty");
-                    return;
+                    return false;
                 }
                 this.removeBonus(this.helmet);
                 this.helmet = null;
-                break;
+                return true;
             case CHEST_PLATE:
                 if (this.chestPlate == null) {
                     System.out.println("Chest plate slot already empty");
-                    return;
+                    return false;
                 }
                 this.removeBonus(this.chestPlate);
                 this.chestPlate = null;
-                break;
+                return true;
             case LEGGINGS:
                 if (this.leggings == null) {
                     System.out.println("Leggings slot already empty");
-                    return;
+                    return false;
                 }
                 this.removeBonus(this.leggings);
                 this.leggings = null;
-                break;
+                return true;
             case BOOTS:
                 if (this.boots == null) {
                     System.out.println("Boots slot already empty");
-                    return;
+                    return false;
                 }
                 this.removeBonus(this.boots);
                 this.boots = null;
-                break;
+                return true;
         }
+        return false;
     }
 
-    public void unEquip(Loot equipment) {
+    public boolean unEquip(Loot equipment) {
         if (equipment instanceof Weapon) {
-            this.unEquipWeapon((Weapon) equipment);
+            return this.unEquipWeapon((Weapon) equipment);
         } else if (equipment instanceof Armor) {
-            this.unEquipArmor((Armor) equipment);
+            return this.unEquipArmor((Armor) equipment);
         }
+        return false;
     }
 
     private void removeAllBonuses() {

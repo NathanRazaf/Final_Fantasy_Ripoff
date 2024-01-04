@@ -10,6 +10,7 @@ import FinalFantasy.StatusEffects;
 public class Sorcerer extends Enemy {
     public Sorcerer(int level, boolean isBoss) {
         super(generateName(level, isBoss), level, isBoss,160, 110, 20, 30, 20, 25, CharacterClass.MAGIC, 20);
+        this.goldGiven = 17+level*3;
         this.actions.add(new MagicalAttack("Sorcerer Fireball", 10, "A basic fireball attack", 30, 90, null, null, 0, false));
         this.actions.add(new MagicalAttack("Sorcerer Ice Shard", 20, "A shard of ice that slows down the enemy hit", 50, 80, new StatusEffects[]{StatusEffects.SLOWED}, null, 2, false));
         this.actions.add(new MagicalAttack("Sorcerer Lightning Bolt", 30, "A bolt of lightning that confuses the enemy hit", 70, 70, new StatusEffects[]{StatusEffects.CONFUSED}, null, 2, false));

@@ -17,7 +17,4 @@ public class Warrior extends Player {
         this.actions.add(new PhysicalAttack("Berserk", 20, "A powerful attack that sacrifices defense", 100, 70, null, new StatusEffects[]{StatusEffects.WEAKENED}, 2, false));
         this.actions.add(new MagicalRecovery("Light Heal", 20, "A basic healing spell", 15,  null, null, 0, true));
     }
-    public String toString() {
-        return this.actions.toString();
-    }
 }

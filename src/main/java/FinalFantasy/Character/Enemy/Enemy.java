@@ -4,6 +4,7 @@ import FinalFantasy.Character.Character;
 import FinalFantasy.Character.CharacterClass;
 import FinalFantasy.Loot.Loot;
 import FinalFantasy.Loot.LootTable;
+import FinalFantasy.Loot.LootTiers;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -13,6 +14,7 @@ public abstract class Enemy extends Character {
     protected final int level;
     protected final boolean isBoss;
     protected int expGiven;
+    protected int goldGiven = 0;
     protected final ArrayList<Loot> lootGiven = new ArrayList<>();
 
     public Enemy(String name, int level, boolean isBoss, int hp, int mp, int atk, int def, int crt, int spd, CharacterClass characterClass, int expGiven) {
@@ -42,17 +44,27 @@ public abstract class Enemy extends Character {
         this.generateLoot();
     }
     private void generateLoot() {
-        Map<Loot, Integer> lootMap = LootTable.INSTANCE.getLootForMonsterAndLevel(this.getClass(), this.level);
+        Map<Loot, LootTiers> lootMap = LootTable.INSTANCE.getMonsterLoot(this.getClass());
         Random rand = new Random();
 
-        for (Map.Entry<Loot, Integer> entry : lootMap.entrySet()) {
-            int randToReach = entry.getValue();
-            if (isBoss) randToReach *= 3;
-            if (rand.nextInt(100) < randToReach) {
+        for (Map.Entry<Loot, LootTiers> entry : lootMap.entrySet()) {
+            if (rand.nextInt(100) < this.chanceBasedOnTier(entry.getValue())) {
                 this.lootGiven.add(entry.getKey());
             }
         }
     }
+
+    private int chanceBasedOnTier(LootTiers lootTier) {
+        return switch (lootTier) {
+            case COMMON -> Math.min(50 + this.level / 2, 100);
+            case UNCOMMON -> Math.min(30 + this.level / 2, 80);
+            case RARE -> Math.min(20 + this.level / 2, 55);
+            case EPIC -> Math.min(10 + this.level / 2, 30);
+            case LEGENDARY -> Math.min(5 + this.level / 3, 15);
+            case MYTHIC -> Math.min(2 + this.level / 3, 10);
+        };
+    }
+
     public int getLevel() {
         return this.level;
     }
@@ -64,6 +76,9 @@ public abstract class Enemy extends Character {
     }
     public int getExpGiven() {
         return this.expGiven;
+    }
+    public int getGoldGiven() {
+        return this.goldGiven;
     }
 
     public String toString() {
