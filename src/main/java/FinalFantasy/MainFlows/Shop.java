@@ -1,19 +1,21 @@
-package FinalFantasy.Battles;
+package FinalFantasy.MainFlows;
 
-import FinalFantasy.Character.CharacterClass;
-import FinalFantasy.InputManager;
+import FinalFantasy.Enums.ArmorTypes;
+import FinalFantasy.Enums.CharacterClass;
+import FinalFantasy.Enums.WeaponTypes;
+import Utilities.InputManager;
 import FinalFantasy.Loot.Equipment.Armors.*;
 import FinalFantasy.Loot.Equipment.Weapons.*;
 import FinalFantasy.Loot.Loot;
-import FinalFantasy.StatusEffects;
-import FinalFantasy.Utility;
+import FinalFantasy.Enums.StatusEffects;
+import Utilities.Utility;
 
 
 import java.util.*;
 
-import static FinalFantasy.Utility.*;
+import static Utilities.Utility.*;
 
-public class Shop {
+public class Shop implements java.io.Serializable {
     private Inventory playerInventory;
     private final HashMap<Loot, Integer> shopInventory = new HashMap<>();
 

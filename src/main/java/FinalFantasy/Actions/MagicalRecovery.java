@@ -1,10 +1,11 @@
 package FinalFantasy.Actions;
 
-import FinalFantasy.StatusEffects;
+import FinalFantasy.Enums.ActionTypes;
+import FinalFantasy.Enums.StatusEffects;
 
-import static FinalFantasy.ConsoleColors.*;
+import static Utilities.ConsoleColors.*;
 
-public class MagicalRecovery extends Action {
+public class MagicalRecovery extends Action implements java.io.Serializable {
     public MagicalRecovery(String name, int mpCost, String description, int value, StatusEffects[] statusEffects, StatusEffects[] drawbacks, int turnDuration, boolean isAsPercentage) {
         super(name, mpCost, description, value, ActionTypes.MAGICAL_RECOVERY, 100, statusEffects, drawbacks, turnDuration, isAsPercentage);
     }

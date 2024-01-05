@@ -1,4 +1,4 @@
-package FinalFantasy;
+package Utilities;
 
 import java.util.Scanner;
 
@@ -6,7 +6,7 @@ import java.util.Scanner;
  * Gets a user's input in the command line.
  * This class is used multiple times in the project to avoid repetitive instantiation of the object Scanner.
  */
-public class InputManager {
+public class InputManager implements java.io.Serializable {
 
     // ATTRIBUTES
 

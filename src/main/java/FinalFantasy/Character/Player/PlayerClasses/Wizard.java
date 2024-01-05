@@ -1,14 +1,12 @@
 package FinalFantasy.Character.Player.PlayerClasses;
 
-import FinalFantasy.Actions.Action;
 import FinalFantasy.Actions.MagicalAttack;
 import FinalFantasy.Actions.MagicalRecovery;
 import FinalFantasy.Actions.PhysicalAttack;
-import FinalFantasy.Character.Character;
-import FinalFantasy.Character.CharacterClass;
+import FinalFantasy.Enums.CharacterClass;
 import FinalFantasy.Character.Player.Player;
 
-public class Wizard extends Player {
+public class Wizard extends Player implements java.io.Serializable {
     public Wizard(String name) {
         super(name,200, 180, 25, 20, 20, 20, CharacterClass.MAGIC);
         this.actions.add(new PhysicalAttack("Staff Bash", 0, "A basic staff attack", 25, 90, null, null, 0, false));

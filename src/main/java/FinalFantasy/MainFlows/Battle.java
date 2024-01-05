@@ -1,25 +1,31 @@
-package FinalFantasy.Battles;
+package FinalFantasy.MainFlows;
 
 import FinalFantasy.Actions.Action;
-import FinalFantasy.Actions.ActionTypes;
+import FinalFantasy.Enums.ActionTypes;
 import FinalFantasy.Character.Character;
 import FinalFantasy.Character.Enemy.Enemy;
 import FinalFantasy.Character.Enemy.Goblin;
 import FinalFantasy.Character.Enemy.Harpy;
 import FinalFantasy.Character.Enemy.Sorcerer;
 import FinalFantasy.Character.Player.Player;
-import FinalFantasy.InputManager;
+import Utilities.InputManager;
 
 import java.util.ArrayList;
 
-import static FinalFantasy.ConsoleColors.*;
-import static FinalFantasy.Utility.randomIntRange;
+import static Utilities.ConsoleColors.*;
+import static Utilities.Utility.randomIntRange;
 
-public class Battle {
+public class Battle implements java.io.Serializable {
     private final ArrayList<Player> players;
     private final ArrayList<Enemy> enemies;
     private final ArrayList<Character> turnOrder = new ArrayList<>();
 
+    public Battle(ArrayList<Player> players, ArrayList<Enemy> enemies) {
+        this.players = players;
+        this.enemies = enemies;
+        this.orderTurns();
+        this.showBattleState();
+    }
     public Battle(ArrayList<Player> players) {
         this.players = players;
         int averageLevel = (int) this.players.stream().mapToInt(Player::getLevel).average().orElse(1);
@@ -62,11 +68,10 @@ public class Battle {
 
     public boolean doBattle() {
         while (true) {
-            for (Character character : this.turnOrder) {character.applyEffects();}
             orderTurns();
             for (Character character : this.turnOrder) {
+                character.applyEffects();
                 if (isBattleOver()) {
-                    endBattle(isVictory());
                     return isVictory();
                 }
                 System.out.println(character.getName() + "'s turn");
@@ -78,6 +83,10 @@ public class Battle {
                 }
                 if (character.getHp() == 0) {
                     System.out.println(character.getName() + " is dead");
+                    if (character instanceof Player player) {
+                        this.players.remove(player);
+                        System.out.println(player.getName() + " has been removed from the battle and will never come back. (yes there's no revives in this game)");
+                    }
                     continue;
                 }
                 if (character instanceof Enemy enemy) {
@@ -104,14 +113,6 @@ public class Battle {
         return this.enemies.stream().allMatch(enemy -> enemy.getHp() == 0);
     }
 
-    private void endBattle(boolean isVictory) {
-        if (isVictory) {
-            System.out.println("You won!");
-        } else {
-            System.out.println("You lost! It's hardcore mode by default lol sorry so you'll have to restart the game");
-        }
-    }
-
     public void makeEnemyAction(Enemy enemy){
         Action action = enemy.getActions().get((int) (Math.random() * enemy.getActions().size()));
         while (action.getMpCost() > enemy.getMp()) {
@@ -120,8 +121,14 @@ public class Battle {
         Character target;
         if (action.getActionType() == ActionTypes.MAGICAL_RECOVERY) {
             target = this.enemies.get((int) (Math.random() * this.enemies.size()));
+            while (target.getHp() == 0) {
+                target = this.enemies.get((int) (Math.random() * this.enemies.size()));
+            }
         } else {
             target = this.players.get((int) (Math.random() * this.players.size()));
+            while (target.getHp() == 0) {
+                target = this.players.get((int) (Math.random() * this.players.size()));
+            }
         }
         enemy.doAction(action, target);
     }

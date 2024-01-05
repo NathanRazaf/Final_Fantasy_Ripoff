@@ -2,15 +2,15 @@ package FinalFantasy.Character.Player;
 
 import FinalFantasy.Actions.Action;
 import FinalFantasy.Character.Character;
-import FinalFantasy.Character.CharacterClass;
+import FinalFantasy.Enums.CharacterClass;
 import FinalFantasy.Loot.Equipment.Armors.*;
 import FinalFantasy.Loot.Equipment.Weapons.Weapon;
 import FinalFantasy.Loot.Loot;
-import FinalFantasy.StatusEffects;
+import FinalFantasy.Enums.StatusEffects;
 
-import static FinalFantasy.ConsoleColors.*;
+import static Utilities.ConsoleColors.*;
 
-public abstract class Player extends Character {
+public abstract class Player extends Character implements java.io.Serializable {
     private int exp = 0;
     private int level = 1;
     private Helmet helmet = null;
@@ -66,8 +66,8 @@ public abstract class Player extends Character {
             def += ((Weapon) equipment).getDefBonus();
             crt += ((Weapon) equipment).getCrtBonus();
         } else if (equipment instanceof Armor) {
-            hp += ((Armor) equipment).getHpBonus();
-            mp += ((Armor) equipment).getMpBonus();
+            maxHp += ((Armor) equipment).getHpBonus();
+            maxMp += ((Armor) equipment).getMpBonus();
             atk += ((Armor) equipment).getAtkBonus();
             def += ((Armor) equipment).getDefBonus();
             crt += ((Armor) equipment).getCrtBonus();
@@ -85,8 +85,8 @@ public abstract class Player extends Character {
             def -= ((Weapon) equipment).getDefBonus();
             crt -= ((Weapon) equipment).getCrtBonus();
         } else if (equipment instanceof Armor) {
-            hp -= ((Armor) equipment).getHpBonus();
-            mp -= ((Armor) equipment).getMpBonus();
+            maxHp -= ((Armor) equipment).getHpBonus();
+            maxMp -= ((Armor) equipment).getMpBonus();
             atk -= ((Armor) equipment).getAtkBonus();
             def -= ((Armor) equipment).getDefBonus();
             crt -= ((Armor) equipment).getCrtBonus();
@@ -264,18 +264,18 @@ public abstract class Player extends Character {
     public void addExp(int exp) {
         this.exp += exp;
         System.out.println(this.name + " gained " + exp + " exp!");
-        int level = this.calculateLevelForExp(this.exp); // Calculate level for current exp
+        int level = Math.min(this.calculateLevelForExp(this.exp), 50); // Calculate level for current exp
         while (level > this.level) { // Level up until appropriate level is reached
             this.levelUp();
         }
     }
     private int calculateLevelForExp(int exp) { // Calculate level for given exp
         int level = 1;
-        int xpForNextLevel = 70;
+        int xpForNextLevel = 100;
 
         while (exp >= xpForNextLevel) {
             level++;
-            xpForNextLevel += 20 * level; // Update the XP required for the next level
+            xpForNextLevel += 50 * level; // Update the XP required for the next level
         }
 
         return level;
@@ -283,7 +283,7 @@ public abstract class Player extends Character {
     public int getRemainingXpForNextLevel() {
         int xpForNextLevel = 50;
         for (int i = 1; i < this.level; i++) {
-            xpForNextLevel += 20 * i;
+            xpForNextLevel += 50 * i;
         }
         return xpForNextLevel - this.exp;
     }
@@ -332,6 +332,12 @@ public abstract class Player extends Character {
         sb.append("HP: ").append(this.hp).append("/").append(this.maxHp).append("\t\t");
         sb.append("MP: ").append(this.mp).append("/").append(this.maxMp).append("\n");
         sb.append("Status effects: ").append(this.effectsToString()).append("\n");
+        return sb.toString();
+    }
+
+    public String verySmallToString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Name: ").append(this.name).append(", Class:").append(this.characterClass).append(", Level: ").append(this.level);
         return sb.toString();
     }
 

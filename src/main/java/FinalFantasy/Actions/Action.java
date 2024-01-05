@@ -1,10 +1,11 @@
 package FinalFantasy.Actions;
 
-import FinalFantasy.StatusEffects;
+import FinalFantasy.Enums.ActionTypes;
+import FinalFantasy.Enums.StatusEffects;
 
-import static FinalFantasy.ConsoleColors.*;
+import static Utilities.ConsoleColors.*;
 
-public abstract class Action {
+public abstract class Action implements java.io.Serializable {
     protected String name;
     protected int mpCost;
     protected String description;

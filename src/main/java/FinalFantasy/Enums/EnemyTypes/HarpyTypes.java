@@ -1,6 +1,6 @@
-package FinalFantasy.Character.Enemy.EnemyTypes;
+package FinalFantasy.Enums.EnemyTypes;
 
-public enum HarpyTypes {
+public enum HarpyTypes implements java.io.Serializable {
     RED_HARPY("Red Harpy"),
     BLUE_HARPY("Blue Harpy"),
     BLACK_HARPY("Black Harpy"),

@@ -1,6 +1,6 @@
-package FinalFantasy;
+package Utilities;
 
-public class ConsoleColors {
+public class ConsoleColors implements java.io.Serializable {
     // Reset
     public static final String RESET = "\033[0m";  // Text Reset
 

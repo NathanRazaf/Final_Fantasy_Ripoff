@@ -1,6 +1,6 @@
-package FinalFantasy.Character.Enemy.EnemyTypes;
+package FinalFantasy.Enums.EnemyTypes;
 
-public enum GoblinTypes {
+public enum GoblinTypes implements java.io.Serializable {
     RED_GOBLIN("Red Goblin"),
     BLUE_GOBLIN("Blue Goblin"),
     BLACK_GOBLIN("Black Goblin"),

@@ -1,15 +1,15 @@
-package FinalFantasy.Battles;
+package FinalFantasy.MainFlows;
 
 import FinalFantasy.Character.Player.Player;
 import FinalFantasy.Loot.Equipment.Armors.Armor;
 import FinalFantasy.Loot.Equipment.Weapons.Weapon;
 import FinalFantasy.Loot.Loot;
-import FinalFantasy.InputManager;
+import Utilities.InputManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Inventory {
+public class Inventory implements java.io.Serializable {
     private int gold = 0;
     public ArrayList<Player> players;
     public HashMap<Loot, Integer> inventory = new HashMap<>();

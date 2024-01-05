@@ -1,13 +1,15 @@
 package FinalFantasy.Character;
 
 import FinalFantasy.Actions.Action;
-import FinalFantasy.Actions.ActionTypes;
-import FinalFantasy.Actions.PhysicalAttack;
-import FinalFantasy.StatusEffects;
+import FinalFantasy.Enums.ActionTypes;
+import FinalFantasy.Enums.CharacterClass;
+import FinalFantasy.Enums.StatusEffects;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
-public abstract class Character {
+public abstract class Character implements java.io.Serializable {
     protected final String name;
     protected int maxHp, maxMp;
     protected int hp, mp, atk, def, crt, spd;
@@ -165,7 +167,10 @@ public abstract class Character {
                 }
                 break;
         }
-        if (this.statusEffects.get(effect) == 0) this.removeEffect(effect);
+        if (this.statusEffects.get(effect) == 0) {
+            this.removeEffect(effect);
+            return;
+        }
         this.statusEffects.put(effect, this.statusEffects.get(effect) - 1);
     }
     public void removeEffect(StatusEffects effect) {
@@ -203,10 +208,14 @@ public abstract class Character {
         this.removeStatusEffect(effect);
     }
     public void applyEffects() {
-        for (StatusEffects effect : this.statusEffects.keySet()) {
+        // Create a copy of the keySet to avoid ConcurrentModificationException
+        Set<StatusEffects> effectsCopy = new HashSet<>(this.statusEffects.keySet());
+
+        for (StatusEffects effect : effectsCopy) {
             this.applyEffect(effect);
         }
     }
+
     public void doAction(Action action, Character target) {
         switch (action.getActionType()) {
             case PHYSICAL_ATTACK, MAGICAL_ATTACK:
@@ -305,11 +314,11 @@ public abstract class Character {
             damage = (int) (damage * 0.8);
 
 
-        return damage;
+        return Math.max(1, damage);
     }
     protected int calculateCriticalHitChance(double crt, double enemyDef, double enemySpd) {
-        double defFactor = 0.4; // Example value, adjust based on testing
-        double spdFactor = 0.2; // Example value, adjust based on testing
+        double defFactor = 0.5; // Example value, adjust based on testing
+        double spdFactor = 0.3; // Example value, adjust based on testing
 
         double criticalHitChance = crt - (enemyDef * defFactor + enemySpd * spdFactor);
         criticalHitChance = Math.max(Math.min(criticalHitChance, 100), 0); // Ensuring it's within 0-100%

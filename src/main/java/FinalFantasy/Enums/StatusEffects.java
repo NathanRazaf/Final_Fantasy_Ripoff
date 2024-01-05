@@ -1,6 +1,6 @@
-package FinalFantasy;
+package FinalFantasy.Enums;
 
-public enum StatusEffects {
+public enum StatusEffects implements java.io.Serializable {
     POISONED,
     FOCUSED,
     CONFUSED,

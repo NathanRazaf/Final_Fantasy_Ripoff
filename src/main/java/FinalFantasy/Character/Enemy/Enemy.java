@@ -1,18 +1,18 @@
 package FinalFantasy.Character.Enemy;
 
 import FinalFantasy.Character.Character;
-import FinalFantasy.Character.CharacterClass;
+import FinalFantasy.Enums.CharacterClass;
 import FinalFantasy.Loot.Loot;
 import FinalFantasy.Loot.LootTable;
-import FinalFantasy.Loot.LootTiers;
+import FinalFantasy.Enums.LootTiers;
 
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Random;
 
-import static FinalFantasy.Utility.randomIntRange;
+import static Utilities.Utility.randomIntRange;
 
-public abstract class Enemy extends Character {
+public abstract class Enemy extends Character implements java.io.Serializable {
     protected final int level;
     protected final boolean isBoss;
     protected int expGiven;

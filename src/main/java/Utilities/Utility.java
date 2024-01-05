@@ -1,8 +1,8 @@
-package FinalFantasy;
+package Utilities;
 
 import java.util.Random;
 
-public class Utility {
+public class Utility implements java.io.Serializable {
     private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     private static final int ID_LENGTH = 8;
 

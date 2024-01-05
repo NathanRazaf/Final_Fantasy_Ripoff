@@ -1,11 +1,10 @@
 package FinalFantasy.Loot.Equipment.Weapons;
 
-import FinalFantasy.Character.Character;
-import FinalFantasy.Character.CharacterClass;
+import FinalFantasy.Enums.CharacterClass;
+import FinalFantasy.Enums.WeaponTypes;
 import FinalFantasy.Loot.Loot;
-import FinalFantasy.StatusEffects;
 
-public abstract class Weapon extends Loot {
+public abstract class Weapon extends Loot implements java.io.Serializable {
     protected final WeaponTypes weaponType;
     protected final CharacterClass[] characterClasses;
     protected final int atkBonus;

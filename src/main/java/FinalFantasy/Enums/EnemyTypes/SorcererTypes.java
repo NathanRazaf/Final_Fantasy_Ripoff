@@ -1,6 +1,6 @@
-package FinalFantasy.Character.Enemy.EnemyTypes;
+package FinalFantasy.Enums.EnemyTypes;
 
-public enum SorcererTypes {
+public enum SorcererTypes implements java.io.Serializable {
     RED_SORCERER("Red Sorcerer"),
     BLUE_SORCERER("Blue Sorcerer"),
     BLACK_SORCERER("Black Sorcerer"),

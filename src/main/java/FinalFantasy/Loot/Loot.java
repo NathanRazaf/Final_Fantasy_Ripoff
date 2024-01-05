@@ -1,6 +1,6 @@
 package FinalFantasy.Loot;
 
-public class Loot {
+public class Loot implements java.io.Serializable {
     protected final String name;
     protected final int value;
     protected final String description;

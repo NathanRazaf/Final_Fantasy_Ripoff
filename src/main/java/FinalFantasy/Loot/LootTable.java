@@ -1,11 +1,11 @@
 package FinalFantasy.Loot;
 
-import FinalFantasy.Character.CharacterClass;
+import FinalFantasy.Enums.CharacterClass;
 import FinalFantasy.Character.Enemy.Enemy;
 import FinalFantasy.Character.Enemy.Goblin;
 import FinalFantasy.Character.Enemy.Harpy;
 import FinalFantasy.Character.Enemy.Sorcerer;
-import FinalFantasy.Loot.Equipment.Armors.Armor;
+import FinalFantasy.Enums.LootTiers;
 import FinalFantasy.Loot.Equipment.Armors.Boots;
 import FinalFantasy.Loot.Equipment.Armors.ChestPlate;
 import FinalFantasy.Loot.Equipment.Armors.Helmet;
@@ -13,7 +13,7 @@ import FinalFantasy.Loot.Equipment.Armors.Helmet;
 import java.util.HashMap;
 import java.util.Map;
 
-public enum LootTable {
+public enum LootTable implements java.io.Serializable {
     INSTANCE;
     private final Map<Class<? extends Enemy>, HashMap<Loot, LootTiers>> lootTable;
 

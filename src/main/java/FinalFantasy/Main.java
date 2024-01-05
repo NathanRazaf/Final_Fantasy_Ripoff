@@ -1,8 +1,9 @@
 package FinalFantasy;
-import FinalFantasy.Battles.GameStateManager;
-public class Main {
+import FinalFantasy.MainFlows.GameStateManager;
+
+public class Main implements java.io.Serializable {
     public static void main(String[] args) {
-        GameStateManager gameStateManager = GameStateManager.getInstance();
-        gameStateManager.start();
+        GameStateManager gsm = GameStateManager.loadState();
+        gsm.startMenu();
     }
 }

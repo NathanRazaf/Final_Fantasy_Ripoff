@@ -1,13 +1,11 @@
 package FinalFantasy.Loot.Equipment.Armors;
 
-import FinalFantasy.Character.Character;
-import FinalFantasy.Character.CharacterClass;
+import FinalFantasy.Enums.ArmorTypes;
+import FinalFantasy.Enums.CharacterClass;
 import FinalFantasy.Loot.Loot;
-import FinalFantasy.StatusEffects;
+import FinalFantasy.Enums.StatusEffects;
 
-import java.util.Arrays;
-
-public abstract class Armor extends Loot {
+public abstract class Armor extends Loot implements java.io.Serializable {
     protected final int hpBonus, mpBonus, atkBonus, defBonus, crtBonus, spdBonus;
     protected final CharacterClass characterClass;
     protected final ArmorTypes armorType;
