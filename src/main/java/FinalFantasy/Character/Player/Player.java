@@ -8,6 +8,8 @@ import FinalFantasy.Loot.Equipment.Weapons.Weapon;
 import FinalFantasy.Loot.Loot;
 import FinalFantasy.StatusEffects;
 
+import static FinalFantasy.ConsoleColors.*;
+
 public abstract class Player extends Character {
     private int exp = 0;
     private int level = 1;
@@ -71,6 +73,7 @@ public abstract class Player extends Character {
             crt += ((Armor) equipment).getCrtBonus();
             spd += ((Armor) equipment).getSpdBonus();
 
+            if (((Armor) equipment).getStatusEffects() == null) return;
             for (StatusEffects statusEffect : ((Armor) equipment).getStatusEffects()) {
                 this.addStatusEffect(statusEffect);
             }
@@ -89,6 +92,7 @@ public abstract class Player extends Character {
             crt -= ((Armor) equipment).getCrtBonus();
             spd -= ((Armor) equipment).getSpdBonus();
 
+            if (((Armor) equipment).getStatusEffects() == null) return;
             for (StatusEffects statusEffect : ((Armor) equipment).getStatusEffects()) {
                 this.removeStatusEffect(statusEffect);
             }
@@ -299,21 +303,21 @@ public abstract class Player extends Character {
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Name: ").append(this.name).append("\n");
-        sb.append("Level: ").append(this.level).append("\n");
-        sb.append("HP: ").append(this.hp).append("/").append(this.maxHp).append("\n");
-        sb.append("MP: ").append(this.mp).append("/").append(this.maxMp).append("\n");
-        sb.append("ATK: ").append(this.atk).append("\n");
-        sb.append("DEF: ").append(this.def).append("\n");
-        sb.append("CRT: ").append(this.crt).append("\n");
-        sb.append("SPD: ").append(this.spd).append("\n");
-        sb.append("Class: ").append(this.characterClass).append("\n");
-        sb.append("Helmet: ").append(this.helmet).append("\n");
-        sb.append("Chest plate: ").append(this.chestPlate).append("\n");
-        sb.append("Leggings: ").append(this.leggings).append("\n");
-        sb.append("Boots: ").append(this.boots).append("\n");
-        sb.append("Weapon 1: ").append(this.weapons[0]).append("\n");
-        sb.append("Weapon 2: ").append(this.weapons[1]).append("\n");
+        sb.append(BLUE_BOLD+"Name: "+BLUE).append(this.name).append("\n");
+        sb.append(GREEN_BOLD+"Level: "+GREEN).append(this.level).append("\n");
+        sb.append(PURPLE_BOLD+"HP: "+PURPLE).append(this.hp).append("/").append(this.maxHp).append("\n");
+        sb.append(PURPLE_BOLD+"MP: "+PURPLE).append(this.mp).append("/").append(this.maxMp).append("\n");
+        sb.append(PURPLE_BOLD+"ATK: "+PURPLE).append(this.atk).append("\n");
+        sb.append(PURPLE_BOLD+"DEF: "+PURPLE).append(this.def).append("\n");
+        sb.append(PURPLE_BOLD+"CRT: "+PURPLE).append(this.crt).append("\n");
+        sb.append(PURPLE_BOLD+"SPD: "+PURPLE).append(this.spd).append("\n");
+        sb.append(YELLOW_BOLD+"Class: "+YELLOW).append(this.characterClass).append("\n");
+        sb.append(YELLOW_BOLD+"Helmet: "+YELLOW).append(this.helmet).append("\n");
+        sb.append(YELLOW_BOLD+"Chest plate: "+YELLOW).append(this.chestPlate).append("\n");
+        sb.append(YELLOW_BOLD+"Leggings: "+YELLOW).append(this.leggings).append("\n");
+        sb.append(YELLOW_BOLD+"Boots: "+YELLOW).append(this.boots).append("\n");
+        sb.append(YELLOW_BOLD+"Weapon 1: "+YELLOW).append(this.weapons[0]).append("\n");
+        sb.append(YELLOW_BOLD+"Weapon 2: "+YELLOW).append(this.weapons[1]).append("\n");
         for (Action action : this.actions) {
             sb.append(action.toString()).append("\n");
         }

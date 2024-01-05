@@ -95,9 +95,6 @@ public abstract class Character {
         this.maxMp = maxMp;
     }
 
-    protected int randomIntRange(int min, int max) {
-        return (int) (Math.random() * (max - min + 1) + min);
-    }
     public void addStatusEffect(StatusEffects statusEffect, int turnDuration) {
         if (statusEffects.containsKey(statusEffect)) {
             statusEffects.put(statusEffect, statusEffects.get(statusEffect) + turnDuration);

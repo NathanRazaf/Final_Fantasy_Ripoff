@@ -12,18 +12,10 @@ import FinalFantasy.InputManager;
 
 import java.util.ArrayList;
 
+import static FinalFantasy.ConsoleColors.*;
+import static FinalFantasy.Utility.randomIntRange;
+
 public class Battle {
-    final String RESET = "\u001B[0m";
-    final String RED = "\u001B[31m";
-    final String GREEN = "\u001B[32m";
-    final String YELLOW = "\u001B[33m";
-    final String BLUE = "\u001B[34m";
-    final String PURPLE = "\u001B[35m";
-    final String CYAN = "\u001B[36m";
-    final String WHITE = "\u001B[37m";
-    final String BLACK = "\u001B[30m";
-    public static final String GREEN_BACKGROUND = "\033[42m";  // GREEN
-    final String RED_BACKGROUND = "\033[41m";    // RED
     private final ArrayList<Player> players;
     private final ArrayList<Enemy> enemies;
     private final ArrayList<Character> turnOrder = new ArrayList<>();
@@ -191,8 +183,5 @@ public class Battle {
         }
     }
 
-    private int randomIntRange(int min, int max) {
-        return (int) (Math.random() * (max - min + 1) + min);
-    }
 
 }
