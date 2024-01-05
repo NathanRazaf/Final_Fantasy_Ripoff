@@ -308,8 +308,8 @@ public abstract class Character {
         return damage;
     }
     protected int calculateCriticalHitChance(double crt, double enemyDef, double enemySpd) {
-        double defFactor = 0.5; // Example value, adjust based on testing
-        double spdFactor = 0.3; // Example value, adjust based on testing
+        double defFactor = 0.4; // Example value, adjust based on testing
+        double spdFactor = 0.2; // Example value, adjust based on testing
 
         double criticalHitChance = crt - (enemyDef * defFactor + enemySpd * spdFactor);
         criticalHitChance = Math.max(Math.min(criticalHitChance, 100), 0); // Ensuring it's within 0-100%

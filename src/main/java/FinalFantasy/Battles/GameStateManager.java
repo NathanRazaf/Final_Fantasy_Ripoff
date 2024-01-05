@@ -19,6 +19,7 @@ import FinalFantasy.InputManager;
 import FinalFantasy.StatusEffects;
 
 public class GameStateManager {
+    private Shop shop = null;
     private static GameStateManager instance = null;
     private final ArrayList<Player> players = new ArrayList<>();
     private final Inventory inventory = new Inventory(this.players);
@@ -64,7 +65,19 @@ public class GameStateManager {
     }
     private void showShop() {
         int teamLevel = this.players.stream().mapToInt(Player::getLevel).sum() / this.players.size();
-        Shop shop = new Shop(teamLevel, this.inventory);
+        if (this.shop == null) {
+            this.shop = new Shop(teamLevel, this.inventory);
+            shop.displayShop();
+            return;
+        }
+        System.out.println("Do you want a new shop? (y/n)");
+        String input = "";
+        while (!input.equals("y") && !input.equals("n")) {
+            input = InputManager.getInstance().nextLine();
+        }
+        if (input.equals("y")) {
+            this.shop = new Shop(teamLevel, this.inventory);
+        }
         shop.displayShop();
     }
     public void start() {

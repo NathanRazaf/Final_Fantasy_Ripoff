@@ -62,7 +62,7 @@ public abstract class Action {
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(RESET+this.name).append(" (").append(this.mpCost).append(" MP)").append("\n");
+        sb.append(RESET + " ").append(this.name).append(" (").append(this.mpCost).append(" MP)").append("\n");
         sb.append(this.description).append("\n");
         sb.append("Has a ").append(this.hitChance).append("% chance to ");
         if (value > 0) {
