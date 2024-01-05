@@ -22,6 +22,11 @@ public class Shop {
         this.playerInventory = playerInventory;
     }
 
+    public void refreshShop(int level) {
+        shopInventory.clear();
+        generateShopInventory(level);
+    }
+
     private void generateShopInventory(int level) {
         generateArmors(level);
         generateWeapons(level);

@@ -270,8 +270,8 @@ public abstract class Player extends Character {
         }
     }
     private int calculateLevelForExp(int exp) { // Calculate level for given exp
-        int level = 0;
-        int xpForNextLevel = 50;
+        int level = 1;
+        int xpForNextLevel = 70;
 
         while (exp >= xpForNextLevel) {
             level++;
@@ -281,7 +281,10 @@ public abstract class Player extends Character {
         return level;
     }
     public int getRemainingXpForNextLevel() {
-        int xpForNextLevel = 50 + 20 * level;
+        int xpForNextLevel = 50;
+        for (int i = 1; i < this.level; i++) {
+            xpForNextLevel += 20 * i;
+        }
         return xpForNextLevel - this.exp;
     }
     public void levelUp() {
@@ -303,21 +306,21 @@ public abstract class Player extends Character {
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(BLUE_BOLD+"Name: "+BLUE).append(this.name).append("\n");
-        sb.append(GREEN_BOLD+"Level: "+GREEN).append(this.level).append("\n");
-        sb.append(PURPLE_BOLD+"HP: "+PURPLE).append(this.hp).append("/").append(this.maxHp).append("\n");
-        sb.append(PURPLE_BOLD+"MP: "+PURPLE).append(this.mp).append("/").append(this.maxMp).append("\n");
-        sb.append(PURPLE_BOLD+"ATK: "+PURPLE).append(this.atk).append("\n");
-        sb.append(PURPLE_BOLD+"DEF: "+PURPLE).append(this.def).append("\n");
-        sb.append(PURPLE_BOLD+"CRT: "+PURPLE).append(this.crt).append("\n");
-        sb.append(PURPLE_BOLD+"SPD: "+PURPLE).append(this.spd).append("\n");
-        sb.append(YELLOW_BOLD+"Class: "+YELLOW).append(this.characterClass).append("\n");
-        sb.append(YELLOW_BOLD+"Helmet: "+YELLOW).append(this.helmet).append("\n");
-        sb.append(YELLOW_BOLD+"Chest plate: "+YELLOW).append(this.chestPlate).append("\n");
-        sb.append(YELLOW_BOLD+"Leggings: "+YELLOW).append(this.leggings).append("\n");
-        sb.append(YELLOW_BOLD+"Boots: "+YELLOW).append(this.boots).append("\n");
-        sb.append(YELLOW_BOLD+"Weapon 1: "+YELLOW).append(this.weapons[0]).append("\n");
-        sb.append(YELLOW_BOLD+"Weapon 2: "+YELLOW).append(this.weapons[1]).append("\n");
+        sb.append(BLUE_BOLD_BRIGHT+"Name: "+BLUE).append(this.name).append("\n");
+        sb.append(GREEN_BOLD_BRIGHT+"Level: "+GREEN).append(this.level).append("\n");
+        sb.append(PURPLE_BOLD_BRIGHT+"HP: "+PURPLE).append(this.hp).append("/").append(this.maxHp).append("\n");
+        sb.append(PURPLE_BOLD_BRIGHT+"MP: "+PURPLE).append(this.mp).append("/").append(this.maxMp).append("\n");
+        sb.append(PURPLE_BOLD_BRIGHT+"ATK: "+PURPLE).append(this.atk).append("\n");
+        sb.append(PURPLE_BOLD_BRIGHT+"DEF: "+PURPLE).append(this.def).append("\n");
+        sb.append(PURPLE_BOLD_BRIGHT+"CRT: "+PURPLE).append(this.crt).append("\n");
+        sb.append(PURPLE_BOLD_BRIGHT+"SPD: "+PURPLE).append(this.spd).append("\n");
+        sb.append(YELLOW_BOLD_BRIGHT+"Class: "+YELLOW).append(this.characterClass).append("\n");
+        sb.append(YELLOW_BOLD_BRIGHT+"Helmet: "+YELLOW).append(this.helmet).append("\n");
+        sb.append(YELLOW_BOLD_BRIGHT+"Chest plate: "+YELLOW).append(this.chestPlate).append("\n");
+        sb.append(YELLOW_BOLD_BRIGHT+"Leggings: "+YELLOW).append(this.leggings).append("\n");
+        sb.append(YELLOW_BOLD_BRIGHT+"Boots: "+YELLOW).append(this.boots).append("\n");
+        sb.append(YELLOW_BOLD_BRIGHT+"Weapon 1: "+YELLOW).append(this.weapons[0]).append("\n");
+        sb.append(YELLOW_BOLD_BRIGHT+"Weapon 2: "+YELLOW).append(this.weapons[1]).append("\n");
         for (Action action : this.actions) {
             sb.append(action.toString()).append("\n");
         }

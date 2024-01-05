@@ -2,6 +2,8 @@ package FinalFantasy.Actions;
 
 import FinalFantasy.StatusEffects;
 
+import static FinalFantasy.ConsoleColors.*;
+
 public class MagicalRecovery extends Action {
     public MagicalRecovery(String name, int mpCost, String description, int value, StatusEffects[] statusEffects, StatusEffects[] drawbacks, int turnDuration, boolean isAsPercentage) {
         super(name, mpCost, description, value, ActionTypes.MAGICAL_RECOVERY, 100, statusEffects, drawbacks, turnDuration, isAsPercentage);
@@ -9,7 +11,7 @@ public class MagicalRecovery extends Action {
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Magical recovery: ").append(this.name).append(" (").append(this.mpCost).append(" MP)").append("\n");
+        sb.append(GREEN_UNDERLINED + GREEN_BOLD).append("Magical recovery:"+RESET+" ").append(this.name).append(" (").append(this.mpCost).append(" MP)").append("\n");
         sb.append(this.description).append("\n");
         if (value > 0) {
             if (this.isAsPercentage) {
