@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Random;
 
+import static FinalFantasy.Utility.randomIntRange;
+
 public abstract class Enemy extends Character {
     protected final int level;
     protected final boolean isBoss;

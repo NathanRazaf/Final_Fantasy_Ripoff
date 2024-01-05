@@ -62,8 +62,13 @@ public class GameStateManager {
     private void showInventory() {
         inventory.display();
     }
+    private void showShop() {
+        int teamLevel = this.players.stream().mapToInt(Player::getLevel).sum() / this.players.size();
+        Shop shop = new Shop(teamLevel, this.inventory);
+        shop.displayShop();
+    }
     public void start() {
-        this.setUpPlayers();
+        setUpPlayers();
         //mock inventory
         inventory.addLoot(new Boots("Boots of Speed", 20, "Gives speed boost", 15, 10, 0, 10, 0, 20, CharacterClass.RANGED, new StatusEffects[]{StatusEffects.ACCELERATED}));
         inventory.addLoot(new ChestPlate("Chestplate of the Warrior", 20, "Gives strength boost", 25, 5, 10, 15, 0, 0, CharacterClass.MELEE, new StatusEffects[]{StatusEffects.STRENGTHENED}));
@@ -80,17 +85,19 @@ public class GameStateManager {
         System.out.println("1. Go to the shop");
         System.out.println("2. Go to the inventory");
         System.out.println("3. Start a random battle");
+        System.out.println("4. Display players");
         System.out.println("0. Quit the game");
         int input = InputManager.getInstance().nextInt();
-        while (input < 0 || input > 3) {
+        while (input < 0 || input > 4) {
             System.out.println("Please enter a valid input");
             input = InputManager.getInstance().nextInt();
         }
         switch (input) {
-            case 1: return true;
-            case 2: showInventory();
-            case 3: return this.startBattle();
-            case 0: return false;
+            case 1 -> showShop();
+            case 2 -> showInventory();
+            case 3 -> {return this.startBattle();}
+            case 4 -> displayPlayers();
+            case 0 -> {return false;}
         }
         return true;
     }
@@ -113,6 +120,12 @@ public class GameStateManager {
         }
         for (Player player : battle.getPlayers()) {
             player.addExp(totalXpGiven);
+        }
+    }
+
+    private void displayPlayers() {
+        for (int i=0; i<this.players.size(); i++) {
+            System.out.println(i+1 + ". " + this.players.get(i).toString() + "\n");
         }
     }
 

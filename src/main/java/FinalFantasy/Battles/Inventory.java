@@ -17,17 +17,20 @@ public class Inventory {
     public Inventory(ArrayList<Player> players) {
         this.players = players;
     }
+    public void displayInventory() {
+        System.out.println("Your inventory:");
+        System.out.println("Gold: " + this.gold);
+        if (this.inventory.isEmpty()) {
+            System.out.println("Your inventory is empty!");
+        }
+        for (Loot loot : this.inventory.keySet()) {
+            System.out.println(loot.getName() + " x" + this.inventory.get(loot));
+        }
+    }
     public void display() {
         boolean continueDisplaying = true;
         while (continueDisplaying) {
-            System.out.println("Your inventory:");
-            System.out.println("Gold: " + this.gold);
-            if (this.inventory.isEmpty()) {
-                System.out.println("Your inventory is empty!");
-            }
-            for (Loot loot : this.inventory.keySet()) {
-                System.out.println(loot.getName() + " x" + this.inventory.get(loot));
-            }
+            displayInventory();
             System.out.println("What do you want to do?");
             System.out.println("1. Equip loot");
             System.out.println("2. Un-equip loot");
@@ -147,6 +150,15 @@ public class Inventory {
         }
     }
 
+    public int getGold() {
+        return gold;
+    }
+    public HashMap<Loot, Integer> getInventory() {
+        return inventory;
+    }
+    public void removeGold(int gold) {
+        this.gold -= gold;
+    }
     public void addGold(int gold) {
         this.gold += gold;
     }
@@ -155,6 +167,14 @@ public class Inventory {
             this.inventory.put(loot, this.inventory.get(loot) + 1);
         } else {
             this.inventory.put(loot, 1);
+        }
+    }
+    public void removeLoot(Loot loot) {
+        if (this.inventory.containsKey(loot)) {
+            this.inventory.put(loot, this.inventory.get(loot) - 1);
+            if (this.inventory.get(loot) == 0) {
+                this.inventory.remove(loot);
+            }
         }
     }
 }
