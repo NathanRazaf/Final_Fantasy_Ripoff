@@ -9,8 +9,11 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
+import static Utilities.Utility.randomIntRange;
+
 public abstract class Character implements java.io.Serializable {
     protected final String name;
+    protected int level;
     protected int maxHp, maxMp;
     protected int hp, mp, atk, def, crt, spd;
     protected final CharacterClass characterClass;
@@ -19,8 +22,9 @@ public abstract class Character implements java.io.Serializable {
     protected ArrayList<StatusEffects> appliedEffects = new ArrayList<>();
 
     //constructor
-    public Character(String name, int hp, int mp, int atk, int def, int crt, int spd, CharacterClass characterClass) {
+    public Character(String name, int level, int hp, int mp, int atk, int def, int crt, int spd, CharacterClass characterClass) {
         this.name = name;
+        this.level = level;
         this.maxHp = hp;
         this.maxMp = mp;
         this.hp = hp;
@@ -259,9 +263,9 @@ public abstract class Character implements java.io.Serializable {
         int healAmount;
 
         if (heal.getIsAsPercentage()) {
-            healAmount = (int) (target.getHp() * (heal.getValue() / 100.0));
+            healAmount = (int) (target.getMaxHp() * (heal.getValue() / 100.0));
         } else {
-            healAmount = heal.getValue() + this.getAtk() - target.getDef();
+            healAmount = heal.getValue();
         }
 
         return healAmount;
@@ -270,12 +274,12 @@ public abstract class Character implements java.io.Serializable {
         int damage;
 
         if (attack.getIsAsPercentage()) {
-            damage = (int) (target.getHp() * (attack.getValue() / 100.0));
+            damage = (int) (target.getMaxHp() * (attack.getValue() / 100.0));
         } else {
-            damage = attack.getValue() + this.getAtk() - target.getDef();
+            damage = attack.getValue()*(int) Math.pow(1.145, this.level) + this.getAtk() - target.getDef();
         }
 
-        int crt = this.calculateCriticalHitChance(this.crt, target.getDef(), target.getSpd());
+        int crt = this.calculateCriticalHitChance(target.getDef(), target.getSpd());
 
         if (crt > (int) (Math.random() * 100)) {
             damage = (int) (damage * 1.5);
@@ -288,14 +292,14 @@ public abstract class Character implements java.io.Serializable {
             (this.getCharacterClass() == CharacterClass.RANGED && target.getCharacterClass() == CharacterClass.MAGIC) ||
             (this.getCharacterClass() == CharacterClass.MAGIC && target.getCharacterClass() == CharacterClass.MELEE)
             )
-            damage = (int) (damage * 1.2);
+            damage = (int) (damage * 1.1);
 
         if (
             (this.getCharacterClass() == CharacterClass.MELEE && target.getCharacterClass() == CharacterClass.MAGIC) ||
             (this.getCharacterClass() == CharacterClass.RANGED && target.getCharacterClass() == CharacterClass.MELEE) ||
             (this.getCharacterClass() == CharacterClass.MAGIC && target.getCharacterClass() == CharacterClass.RANGED)
             )
-            damage = (int) (damage * 0.8);
+            damage = (int) (damage * 0.9);
 
 
         // Attack type advantage/disadvantage
@@ -304,23 +308,23 @@ public abstract class Character implements java.io.Serializable {
             (attack.getActionType() == ActionTypes.MAGICAL_ATTACK && target.getCharacterClass() == CharacterClass.RANGED) ||
             (attack.getActionType() == ActionTypes.MAGICAL_ATTACK && target.getCharacterClass() == CharacterClass.MELEE)
             )
-            damage = (int) (damage * 1.2);
+            damage = (int) (damage * 1.1);
 
         if (
             (attack.getActionType() == ActionTypes.PHYSICAL_ATTACK && target.getCharacterClass() == CharacterClass.RANGED) ||
             (attack.getActionType() == ActionTypes.MAGICAL_ATTACK && target.getCharacterClass() == CharacterClass.MELEE) ||
             (attack.getActionType() == ActionTypes.MAGICAL_ATTACK && target.getCharacterClass() == CharacterClass.MAGIC)
             )
-            damage = (int) (damage * 0.8);
+            damage = (int) (damage * 0.9);
 
 
         return Math.max(1, damage);
     }
-    protected int calculateCriticalHitChance(double crt, double enemyDef, double enemySpd) {
+    protected int calculateCriticalHitChance(double enemyDef, double enemySpd) {
         double defFactor = 0.5; // Example value, adjust based on testing
         double spdFactor = 0.3; // Example value, adjust based on testing
 
-        double criticalHitChance = crt - (enemyDef * defFactor + enemySpd * spdFactor);
+        double criticalHitChance = this.crt*1.5 - (enemyDef * defFactor + enemySpd * spdFactor);
         criticalHitChance = Math.max(Math.min(criticalHitChance, 100), 0); // Ensuring it's within 0-100%
 
         return (int) criticalHitChance;

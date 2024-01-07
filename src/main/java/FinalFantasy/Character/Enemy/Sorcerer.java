@@ -21,16 +21,16 @@ public class Sorcerer extends Enemy implements java.io.Serializable {
         else if (0 <= level && level <= 8) {
             return SorcererTypes.RED_SORCERER.getName();
         }
-        else if (9 <= level && level <= 20) {
+        else if (9 <= level && level <= 19) {
             return SorcererTypes.BLUE_SORCERER.getName();
         }
-        else if (21 <= level && level <= 30) {
+        else if (20 <= level && level <= 28) {
             return SorcererTypes.BLACK_SORCERER.getName();
         }
-        else if (30 <= level && level <= 42) {
+        else if (29 <= level && level <= 41) {
             return SorcererTypes.WHITE_SORCERER.getName();
         }
-        else if (43 <= level && level <= 60) {
+        else if (42 <= level && level <= 49) {
             return SorcererTypes.GOLD_SORCERER.getName();
         }
         else {

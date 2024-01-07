@@ -22,16 +22,16 @@ public class Harpy extends Enemy implements java.io.Serializable {
         else if (0 <= level && level <= 8) {
             return HarpyTypes.RED_HARPY.getName();
         }
-        else if (9 <= level && level <= 20) {
+        else if (9 <= level && level <= 19) {
             return HarpyTypes.BLUE_HARPY.getName();
         }
-        else if (21 <= level && level <= 30) {
+        else if (20 <= level && level <= 28) {
             return HarpyTypes.BLACK_HARPY.getName();
         }
-        else if (30 <= level && level <= 42) {
+        else if (29 <= level && level <= 41) {
             return HarpyTypes.WHITE_HARPY.getName();
         }
-        else if (43 <= level && level <= 60) {
+        else if (42 <= level && level <= 49) {
             return HarpyTypes.GOLD_HARPY.getName();
         }
         else {

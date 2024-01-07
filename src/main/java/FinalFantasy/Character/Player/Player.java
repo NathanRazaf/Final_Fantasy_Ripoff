@@ -12,14 +12,13 @@ import static Utilities.ConsoleColors.*;
 
 public abstract class Player extends Character implements java.io.Serializable {
     private int exp = 0;
-    private int level = 1;
     private Helmet helmet = null;
     private ChestPlate chestPlate = null;
     private Leggings leggings = null;
     private Boots boots = null;
     private Weapon[] weapons = new Weapon[2];
     public Player(String name, int hp, int mp, int atk, int def, int crt, int spd, CharacterClass characterClass) {
-        super(name, hp, mp, atk, def, crt, spd, characterClass);
+        super(name, 1, hp, mp, atk, def, crt, spd, characterClass);
     }
     public int getExp() {
         return this.exp;
@@ -302,7 +301,10 @@ public abstract class Player extends Character implements java.io.Serializable {
         this.mp = this.maxMp;
         System.out.println("Level up! Level " + this.level);
         System.out.println("XP for next level: " + this.getRemainingXpForNextLevel());
+        tryAddActions();
     }
+
+    public abstract void tryAddActions();
 
     public String toString() {
         StringBuilder sb = new StringBuilder();

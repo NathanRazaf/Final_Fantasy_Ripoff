@@ -37,11 +37,11 @@ public class Battle implements java.io.Serializable {
                 double random = Math.random();
                 // 33% chance of goblin, 33% chance of harpy, 33% chance of sorcerer
                 if (random < 0.33) {
-                    enemy = new Goblin(Math.max(0, randomIntRange(averageLevel - 1, averageLevel + 1)), Math.random() < 0.1);
+                    enemy = new Goblin(Math.max(0, randomIntRange(averageLevel - 1, averageLevel + 1)), Math.random() < 0.01*averageLevel);
                 } else if (random < 0.66) {
-                    enemy = new Harpy(Math.max(0, randomIntRange(averageLevel - 1, averageLevel + 1)), Math.random() < 0.1);
+                    enemy = new Harpy(Math.max(0, randomIntRange(averageLevel - 1, averageLevel + 1)), Math.random() < 0.01*averageLevel);
                 } else {
-                    enemy = new Sorcerer(Math.max(0, randomIntRange(averageLevel - 1, averageLevel + 1)), Math.random() < 0.1);
+                    enemy = new Sorcerer(Math.max(0, randomIntRange(averageLevel - 1, averageLevel + 1)), Math.random() < 0.01*averageLevel);
                 }
                 this.enemies.add(enemy);
             }

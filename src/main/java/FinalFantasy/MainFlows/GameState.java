@@ -1,5 +1,6 @@
 package FinalFantasy.MainFlows;
 
+import FinalFantasy.Character.Enemy.Harpy;
 import FinalFantasy.Character.Enemy.Sorcerer;
 import FinalFantasy.Enums.CharacterClass;
 import FinalFantasy.Character.Enemy.Enemy;
@@ -14,10 +15,12 @@ import FinalFantasy.Loot.Equipment.Weapons.Bow;
 import FinalFantasy.Loot.Equipment.Weapons.Sword;
 import FinalFantasy.Loot.Loot;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import Utilities.InputManager;
 import FinalFantasy.Enums.StatusEffects;
+import Utilities.SerializationUtil;
 
 import static Utilities.Utility.randomIntRange;
 
@@ -62,6 +65,7 @@ public class GameState implements java.io.Serializable {
     }
     private void showInventory() {
         inventory.display();
+
     }
     private void showShop() {
         int teamLevel = this.players.stream().mapToInt(Player::getLevel).sum() / this.players.size();
@@ -79,15 +83,15 @@ public class GameState implements java.io.Serializable {
             this.shop = new Shop(teamLevel, this.inventory);
         }
         shop.displayShop();
+
     }
-    public void load() {
+    public void load() throws IOException {
         if (players.isEmpty()) setUpPlayers();
 
         boolean isRunning = true;
 
         while (isRunning) {
             isRunning = this.displayMainMenu();
-            GameStateManager.getInstance().saveState();
         }
     }
 
@@ -144,6 +148,7 @@ public class GameState implements java.io.Serializable {
             GameStateManager.getInstance().deleteGameState(this.index);
             System.exit(0);
         }
+
     }
     private void rewardBattle(Battle battle) {
         int totalXpGiven = 0;
@@ -164,6 +169,7 @@ public class GameState implements java.io.Serializable {
         for (int i=0; i<this.players.size(); i++) {
             System.out.println(i+1 + ". " + this.players.get(i).toString() + "\n");
         }
+
     }
 
     public String toString() {

@@ -13,7 +13,13 @@ public class Wizard extends Player implements java.io.Serializable {
         this.actions.add(new MagicalAttack("Fireball", 10, "A basic fireball spell", 40, 85, null, null, 0, false));
         this.actions.add(new MagicalAttack("Lightning", 15, "A powerful lightning spell", 65, 80, null, null, 0, false));
         this.actions.add(new MagicalAttack("Meteor", 20, "A powerful meteor spell", 100, 70, null, null, 0, false));
+        this.actions.add(new MagicalAttack("Ultima", 30, "The ultimate spell", 50, 85, null, null, 0, true));
         this.actions.add(new MagicalRecovery("Light Heal", 20, "A basic healing spell", 25,  null, null, 0, true));
+
+    }
+
+    @Override
+    public void tryAddActions() {
 
     }
 }

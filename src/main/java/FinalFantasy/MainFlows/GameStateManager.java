@@ -20,7 +20,9 @@ public class GameStateManager implements java.io.Serializable {
 
     public void saveState() {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("gameState.ser"))) {
+            System.out.println("Saving game state...");
             oos.writeObject(this);
+            oos.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -30,15 +32,19 @@ public class GameStateManager implements java.io.Serializable {
         GameStateManager gameStateManager;
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("gameState.ser"))) {
             gameStateManager = (GameStateManager) ois.readObject();
+        } catch (FileNotFoundException e) {
+            System.out.println("Save file not found. Creating a new game state.");
+            gameStateManager = new GameStateManager();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
-            gameStateManager = new GameStateManager(); // or handle differently
+            gameStateManager = new GameStateManager(); // Handle other exceptions
         }
         return gameStateManager;
     }
 
+
     // Other methods
-    public void startMenu() {
+    public void startMenu() throws IOException {
         StringBuilder stringBuilder = new StringBuilder();
         System.out.println("Welcome to Final Fantasy!");
         System.out.println("Choose a load slot to load or create a new game:");

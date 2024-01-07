@@ -1,9 +1,36 @@
 package FinalFantasy;
 import FinalFantasy.MainFlows.GameStateManager;
+import Utilities.SerializationUtil;
+
+import java.io.IOException;
 
 public class Main implements java.io.Serializable {
-    public static void main(String[] args) {
-        GameStateManager gsm = GameStateManager.loadState();
-        gsm.startMenu();
+    private static final String DATA_FILE = "gameState.ser";
+    private static GameStateManager gameStateManager;
+    public static void main(String[] args) throws IOException {
+        try {
+            // Try to load existing data
+            gameStateManager = SerializationUtil.loadData(DATA_FILE);
+        } catch (IOException | ClassNotFoundException e) {
+            // If no data is found or an error occurs, create new data
+            gameStateManager = new GameStateManager();
+        }
+
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            try {
+                SerializationUtil.saveData(gameStateManager, DATA_FILE);
+                System.out.println("Data saved successfully.");
+            } catch (IOException e) {
+                System.out.println("Error saving data: " + e.getMessage());
+            }
+        }));
+
+        gameStateManager.startMenu();
+
+        try {
+            SerializationUtil.saveData(gameStateManager, DATA_FILE);
+        } catch (IOException e) {
+            System.out.println("Error saving data: " + e.getMessage());
+        }
     }
 }
