@@ -1,5 +1,6 @@
 package FinalFantasy.MainFlows;
 
+import FinalFantasy.Character.Player.Player;
 import FinalFantasy.Enums.ArmorTypes;
 import FinalFantasy.Enums.CharacterClass;
 import FinalFantasy.Enums.WeaponTypes;
@@ -16,7 +17,7 @@ import java.util.*;
 import static Utilities.Utility.*;
 
 public class Shop implements java.io.Serializable {
-    private Inventory playerInventory;
+    private final Inventory playerInventory;
     private final HashMap<Loot, Integer> shopInventory = new HashMap<>();
 
     public Shop(int level, Inventory playerInventory) {
@@ -24,9 +25,12 @@ public class Shop implements java.io.Serializable {
         this.playerInventory = playerInventory;
     }
 
-    public void refreshShop(int level) {
-        shopInventory.clear();
-        generateShopInventory(level);
+    public Shop(GameState gameState) {
+        this(gameState.getPlayers().stream().mapToInt(Player::getLevel).sum() / gameState.getPlayers().size(), gameState.getInventory());
+    }
+
+    public HashMap<Loot, Integer> getShopInventory() {
+        return shopInventory;
     }
 
     private void generateShopInventory(int level) {
@@ -363,6 +367,13 @@ public class Shop implements java.io.Serializable {
         }
         playerInventory.addGold(item.getValue()*quantity);
         System.out.println("You gained " + item.getValue()*quantity + " gold by selling " + quantity + " " + item.getName());
+    }
+
+    public void removeSomeLoot(Loot loot, int quantity) {
+        shopInventory.put(loot, shopInventory.get(loot)-quantity);
+        if (shopInventory.get(loot) == 0) {
+            shopInventory.remove(loot);
+        }
     }
 
 }

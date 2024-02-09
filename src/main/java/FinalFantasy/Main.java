@@ -7,7 +7,7 @@ import java.io.IOException;
 public class Main implements java.io.Serializable {
     private static final String DATA_FILE = "gameState.ser";
     private static GameStateManager gameStateManager;
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         try {
             // Try to load existing data
             gameStateManager = SerializationUtil.loadData(DATA_FILE);
@@ -15,6 +15,9 @@ public class Main implements java.io.Serializable {
             // If no data is found or an error occurs, create new data
             gameStateManager = new GameStateManager();
         }
+
+        gameStateManager.startMenu();
+
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             try {
@@ -24,9 +27,6 @@ public class Main implements java.io.Serializable {
                 System.out.println("Error saving data: " + e.getMessage());
             }
         }));
-
-        gameStateManager.startMenu();
-
         try {
             SerializationUtil.saveData(gameStateManager, DATA_FILE);
         } catch (IOException e) {

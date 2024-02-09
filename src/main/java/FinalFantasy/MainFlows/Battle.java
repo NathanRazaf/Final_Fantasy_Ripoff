@@ -49,7 +49,7 @@ public class Battle implements java.io.Serializable {
         this.orderTurns();
         this.showBattleState();
     }
-    private void orderTurns() {
+    public void orderTurns() {
         this.turnOrder.clear();
         this.turnOrder.addAll(this.players);
         this.turnOrder.addAll(this.enemies);
@@ -75,12 +75,6 @@ public class Battle implements java.io.Serializable {
                     return isVictory();
                 }
                 System.out.println(character.getName() + "'s turn");
-                try {
-                    Thread.sleep(1000); // Delay for 1000 milliseconds (1 second)
-                } catch (InterruptedException e) {
-                    // Handle the InterruptedException
-                    e.printStackTrace();
-                }
                 if (character.getHp() == 0) {
                     System.out.println(character.getName() + " is dead");
                     if (character instanceof Player player) {
@@ -95,21 +89,15 @@ public class Battle implements java.io.Serializable {
                     promptPlayerAction(player);
                 }
                 showBattleState();
-                try {
-                    Thread.sleep(1000); // Delay for 1000 milliseconds (1 second)
-                } catch (InterruptedException e) {
-                    // Handle the InterruptedException
-                    e.printStackTrace();
-                }
             }
         }
     }
 
-    private boolean isBattleOver() {
+    public boolean isBattleOver() {
         return this.players.stream().allMatch(player -> player.getHp() == 0)
                 || this.enemies.stream().allMatch(enemy -> enemy.getHp() == 0);
     }
-    private boolean isVictory() {
+    public boolean isVictory() {
         return this.enemies.stream().allMatch(enemy -> enemy.getHp() == 0);
     }
 

@@ -11,9 +11,13 @@ import java.util.HashMap;
 
 public class Inventory implements java.io.Serializable {
     private int gold = 0;
-    public ArrayList<Player> players;
-    public HashMap<Loot, Integer> inventory = new HashMap<>();
+    private ArrayList<Player> players;
 
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
+
+    private HashMap<Loot, Integer> inventory = new HashMap<>();
     public Inventory(ArrayList<Player> players) {
         this.players = players;
     }
@@ -169,12 +173,22 @@ public class Inventory implements java.io.Serializable {
             this.inventory.put(loot, 1);
         }
     }
+    public void addLoot(Loot loot, int quantity) {
+        for (int i = 0; i < quantity; i++) {
+            this.addLoot(loot);
+        }
+    }
     public void removeLoot(Loot loot) {
         if (this.inventory.containsKey(loot)) {
             this.inventory.put(loot, this.inventory.get(loot) - 1);
             if (this.inventory.get(loot) == 0) {
                 this.inventory.remove(loot);
             }
+        }
+    }
+    public void removeLoot(Loot loot, int quantity) {
+        for (int i = 0; i < quantity; i++) {
+            this.removeLoot(loot);
         }
     }
 }

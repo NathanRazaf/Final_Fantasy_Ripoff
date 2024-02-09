@@ -1,13 +1,11 @@
 package FinalFantasy.MainFlows;
 
 import Utilities.InputManager;
-import com.google.gson.Gson;
-import java.io.*;
 
 public class GameStateManager implements java.io.Serializable {
     private static GameStateManager instance;
     private static final int NUMBER_OF_SAVES = 3;
-    private GameState[] gameStates = new GameState[NUMBER_OF_SAVES];
+    private final GameState[] gameStates = new GameState[NUMBER_OF_SAVES];
 
     // Singleton pattern implementation
     public static GameStateManager getInstance() {
@@ -18,33 +16,18 @@ public class GameStateManager implements java.io.Serializable {
     }
     // ...
 
-    public void saveState() {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("gameState.ser"))) {
-            System.out.println("Saving game state...");
-            oos.writeObject(this);
-            oos.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
+    public GameState[] getGameStates() {
+        return gameStates;
+    }
+    // Add or replace a GameState at a specific index
+    public void setGameState(int index, GameState gameState) {
+        if (index >= 0 && index < gameStates.length) {
+            gameStates[index] = gameState;
         }
     }
-
-    public static GameStateManager loadState() {
-        GameStateManager gameStateManager;
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("gameState.ser"))) {
-            gameStateManager = (GameStateManager) ois.readObject();
-        } catch (FileNotFoundException e) {
-            System.out.println("Save file not found. Creating a new game state.");
-            gameStateManager = new GameStateManager();
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-            gameStateManager = new GameStateManager(); // Handle other exceptions
-        }
-        return gameStateManager;
-    }
-
 
     // Other methods
-    public void startMenu() throws IOException {
+    public void startMenu() {
         StringBuilder stringBuilder = new StringBuilder();
         System.out.println("Welcome to Final Fantasy!");
         System.out.println("Choose a load slot to load or create a new game:");
@@ -66,7 +49,6 @@ public class GameStateManager implements java.io.Serializable {
         if (this.gameStates[gameStateIndex] == null) {
             this.gameStates[gameStateIndex] = new GameState(gameStateIndex);
             this.gameStates[gameStateIndex].load();
-            this.saveState();
             return;
         }
         this.gameStates[gameStateIndex].load();
@@ -74,6 +56,5 @@ public class GameStateManager implements java.io.Serializable {
 
     public void deleteGameState(int index) {
         this.gameStates[index] = null;
-        this.saveState();
     }
 }

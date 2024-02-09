@@ -34,4 +34,29 @@ public class MagicalRecovery extends Action implements java.io.Serializable {
 
         return sb.toString();
     }
+
+    public String toStringNoColor() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Magical recovery: ").append(this.name).append(" (").append(this.mpCost).append(" MP)").append("\n");
+        sb.append(this.description).append("\n");
+        if (value > 0) {
+            if (this.isAsPercentage) {
+                sb.append("Heals ").append(this.value).append("% of the target(s)' HP");
+            } else {
+                sb.append("Heals back ").append(this.value).append(" HP of the target(s)");
+            }
+        }
+        if (this.statusEffects != null) {
+            sb.append(" and applies ");
+            for (int i = 0; i < this.statusEffects.length; i++) {
+                sb.append(this.statusEffects[i].toString());
+                if (i != this.statusEffects.length - 1) {
+                    sb.append(", ");
+                }
+            }
+            sb.append(" to the target(s) for ").append(this.turnDuration).append(" turn(s)");
+        }
+
+        return sb.toString();
+    }
 }

@@ -13,6 +13,10 @@ import static Utilities.Utility.randomIntRange;
 
 public abstract class Character implements java.io.Serializable {
     protected final String name;
+    private Character lastTarget;
+    private int lastDamageDealt;
+    private StatusEffects[] lastStatusEffectsApplied;
+    private Action lastMoveUsed;
     protected int level;
     protected int maxHp, maxMp;
     protected int hp, mp, atk, def, crt, spd;
@@ -221,6 +225,7 @@ public abstract class Character implements java.io.Serializable {
     }
 
     public void doAction(Action action, Character target) {
+        this.lastTarget = target;
         switch (action.getActionType()) {
             case PHYSICAL_ATTACK, MAGICAL_ATTACK:
                 this.attack(action, target);
@@ -229,12 +234,7 @@ public abstract class Character implements java.io.Serializable {
                 this.heal(action, target);
                 break;
         }
-
-        if (action.getStatusEffects() != null) {
-            for (StatusEffects statusEffect : action.getStatusEffects()) {
-                target.addStatusEffect(statusEffect, action.getTurnDuration());
-            }
-        }
+        this.lastMoveUsed = action;
 
         if (action.getDrawbacks() != null) {
             for (StatusEffects drawback : action.getDrawbacks()) {
@@ -248,8 +248,15 @@ public abstract class Character implements java.io.Serializable {
             int damage = this.calculateDamage(attack, target);
             target.setHp(Math.max(0, target.getHp() - damage));
             System.out.println(this.getName() + " dealt " + damage + " damage to " + target.getName() + " with " + attack.getName() + "!");
+            if (attack.getStatusEffects() != null) {
+                for (StatusEffects statusEffect : attack.getStatusEffects()) {
+                    target.addStatusEffect(statusEffect, attack.getTurnDuration());
+                }
+            }
+            this.lastStatusEffectsApplied = attack.getStatusEffects();
         } else {
             System.out.println(this.getName() + " missed his attack on " + target.getName() + "!");
+            this.lastTarget = null;
         }
     }
     public void heal(Action heal, Character target) {
@@ -317,7 +324,7 @@ public abstract class Character implements java.io.Serializable {
             )
             damage = (int) (damage * 0.9);
 
-
+        lastDamageDealt = Math.max(1, damage);
         return Math.max(1, damage);
     }
     protected int calculateCriticalHitChance(double enemyDef, double enemySpd) {
@@ -337,5 +344,18 @@ public abstract class Character implements java.io.Serializable {
             s.append(statusEffect.toString()).append(" (").append(this.statusEffects.get(statusEffect)).append(" turns left); ");
         }
         return s.toString();
+    }
+
+    public Character getLastTarget() {
+        return lastTarget;
+    }
+    public int getLastDamageDealt() {
+        return lastDamageDealt;
+    }
+    public StatusEffects[] getLastStatusEffectsApplied() {
+        return lastStatusEffectsApplied;
+    }
+    public Action getLastMoveUsed() {
+        return lastMoveUsed;
     }
 }

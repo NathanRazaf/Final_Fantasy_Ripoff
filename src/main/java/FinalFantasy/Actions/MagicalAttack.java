@@ -13,4 +13,8 @@ public class MagicalAttack extends Action implements java.io.Serializable {
     public String toString() {
         return PURPLE_UNDERLINED + PURPLE_BOLD + "Magical attack:" + RESET + super.toString();
     }
+
+    public String toStringNoColor() {
+        return "Magical attack: " + super.toStringNoColor();
+    }
 }

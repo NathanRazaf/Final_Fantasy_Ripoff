@@ -51,6 +51,22 @@ public abstract class Weapon extends Loot implements java.io.Serializable {
         return characterClassesString.toString();
     }
 
+    public String smallToString() {
+        StringBuilder smallToString = new StringBuilder();
+        smallToString.append(this.getName()+"\n");
+        if (this.getAtkBonus() > 0) {
+            smallToString.append("+").append(this.getAtkBonus()).append(" ATK");
+        }
+        if (this.getDefBonus() > 0) {
+            smallToString.append(", +").append(this.getDefBonus()).append(" DEF");
+        }
+        if (this.getCrtBonus() > 0) {
+            smallToString.append(", +").append(this.getCrtBonus()).append(" CRT");
+        }
+
+        return smallToString.toString();
+    }
+
     public String toString() {
         return this.getName() + " - " + this.getDescription() + "\n" +
                 "Weapon Type: " + this.getWeaponType() + "\n" +

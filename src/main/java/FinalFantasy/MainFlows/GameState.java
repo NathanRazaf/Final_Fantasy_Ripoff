@@ -1,37 +1,40 @@
 package FinalFantasy.MainFlows;
 
-import FinalFantasy.Character.Enemy.Harpy;
-import FinalFantasy.Character.Enemy.Sorcerer;
-import FinalFantasy.Enums.CharacterClass;
 import FinalFantasy.Character.Enemy.Enemy;
 import FinalFantasy.Character.Player.Player;
 import FinalFantasy.Character.Player.PlayerClasses.Archer;
 import FinalFantasy.Character.Player.PlayerClasses.Warrior;
 import FinalFantasy.Character.Player.PlayerClasses.Wizard;
-import FinalFantasy.Loot.Equipment.Armors.Boots;
-import FinalFantasy.Loot.Equipment.Armors.ChestPlate;
-import FinalFantasy.Loot.Equipment.Armors.Leggings;
-import FinalFantasy.Loot.Equipment.Weapons.Bow;
-import FinalFantasy.Loot.Equipment.Weapons.Sword;
 import FinalFantasy.Loot.Loot;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import Utilities.InputManager;
-import FinalFantasy.Enums.StatusEffects;
-import Utilities.SerializationUtil;
 
 import static Utilities.Utility.randomIntRange;
 
 public class GameState implements java.io.Serializable {
-    private int index;
+    private final int index;
     private Shop shop = null;
     private final ArrayList<Player> players = new ArrayList<>();
     private final Inventory inventory = new Inventory(this.players);
     public GameState(int index) {
         this.index = index;
     }
+
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
+    public Inventory getInventory() {
+        return inventory;
+    }
+    public int getIndex() {
+        return index;
+    }
+    public Shop getShop() {
+        return shop;
+    }
+
     public void setUpPlayers() {
         System.out.println("Create your dream team of 4 characters!");
         for (int i=0; i<4; i++) {
@@ -85,7 +88,7 @@ public class GameState implements java.io.Serializable {
         shop.displayShop();
 
     }
-    public void load() throws IOException {
+    public void load() {
         if (players.isEmpty()) setUpPlayers();
 
         boolean isRunning = true;

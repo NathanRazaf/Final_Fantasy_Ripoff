@@ -14,4 +14,8 @@ public class PhysicalAttack extends Action implements java.io.Serializable {
     public String toString() {
         return RED_UNDERLINED+RED_BOLD+ "Physical attack:" + super.toString();
     }
+
+    public String toStringNoColor() {
+        return "Physical attack: " + super.toStringNoColor();
+    }
 }

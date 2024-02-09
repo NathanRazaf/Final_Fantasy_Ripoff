@@ -60,6 +60,34 @@ public abstract class Armor extends Loot implements java.io.Serializable {
         }
         return statusEffectsString.toString();
     }
+
+    public String smallToString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(this.getName()+"\n");
+        if (this.getHpBonus() != 0) {
+            sb.append("+").append(this.getHpBonus()).append(" HP");
+        }
+        if (this.getMpBonus() != 0) {
+            sb.append(", +").append(this.getMpBonus()).append(" MP");
+        }
+        if (this.getAtkBonus() != 0) {
+            sb.append(", +").append(this.getAtkBonus()).append(" ATK");
+        }
+        if (this.getDefBonus() != 0) {
+            sb.append(", +").append(this.getDefBonus()).append(" DEF");
+        }
+        if (this.getCrtBonus() != 0) {
+            sb.append(", +").append(this.getCrtBonus()).append(" CRT");
+        }
+        if (this.getSpdBonus() != 0) {
+            sb.append(", +").append(this.getSpdBonus()).append(" SPD");
+        }
+        if (this.getStatusEffects() != null) {
+            sb.append("\nGives ").append(this.getStatusEffectsString());
+        }
+
+        return sb.toString();
+    }
     public String toString() {
         return this.getName() + " - " + this.getDescription() + "\n" +
                 "HP bonus: " + this.getHpBonus() + "\n" +

@@ -45,6 +45,9 @@ public abstract class Enemy extends Character implements Serializable {
             this.expGiven *= 3;
         }
 
+        this.maxHp = this.hp;
+        this.maxMp = this.mp;
+
         this.generateLoot();
     }
     private void generateLoot() {
@@ -124,7 +127,7 @@ public abstract class Enemy extends Character implements Serializable {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(this.name).append("\t\t").append("Type: ").append(this.characterClass).append("\n");
-        sb.append("HP: ").append(this.hp).append("\n");
+        sb.append("HP: ").append(this.hp).append("/").append(this.maxHp).append("\n");
         sb.append("Status effects: ").append(this.effectsToString()).append("\n");
         if (isBoss) sb.append("BOSS").append("\n");
         return sb.toString();

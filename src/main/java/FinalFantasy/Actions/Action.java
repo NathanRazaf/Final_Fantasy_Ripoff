@@ -98,6 +98,44 @@ public abstract class Action implements java.io.Serializable {
         return sb.toString();
     }
 
+    public String toStringNoColor() {
+            StringBuilder sb = new StringBuilder();
+            sb.append(this.name).append(" (").append(this.mpCost).append(" MP)").append("\n");
+            sb.append(this.description).append("\n");
+            sb.append("Has a ").append(this.hitChance).append("% chance to ");
+            if (value > 0) {
+                if (this.isAsPercentage) {
+                    sb.append("deal ").append(this.value).append("% of the target(s)' HP as damage");
+                } else {
+                    sb.append("deal ").append(this.value).append(" HP damage to the target(s)");
+                }
+            }
+            if (this.statusEffects != null) {
+                sb.append(" and to apply ");
+                for (int i = 0; i < this.statusEffects.length; i++) {
+                    sb.append(this.statusEffects[i].toString());
+                    if (i != this.statusEffects.length - 1) {
+                        sb.append(", ");
+                    }
+                }
+                sb.append(" to the target(s) for ").append(this.turnDuration).append(" turn(s)");
+            }
+            sb.append("\n");
+            if (this.drawbacks != null) {
+                sb.append("Applies ");
+                for (int i = 0; i < this.drawbacks.length; i++) {
+                    sb.append(this.drawbacks[i].toString());
+                    if (i != this.drawbacks.length - 1) {
+                        sb.append(", ");
+                    }
+                }
+                sb.append(" to the user in return for ").append(this.turnDuration).append(" turn(s)");
+            }
+
+            return sb.toString();
+
+    }
+
     public String smallToString() {
         return this.name + " (" + this.mpCost + " MP)";
     }
